@@ -58,11 +58,11 @@ Die Installation des Modul MITS Embedded Videos ist ziemlich einfach.
        MITS Embedded Videos © by Hetfield (MerZ IT-SerVice)
        und klicken sie dann auf der rechten Seite auf den Button Installieren. 
        Das Klassenerweiterungs-Modul wird nun komplett installiert.
-
-   10. Für die Templates tpl_modified und tpl_modified_responsive sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern"
+       
+    10. Für die Templates tpl_modified und tpl_modified_responsive sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern"
        keine Änderungen notwendig. Möchten Sie diese Option in anderen Templates nutzen, können Sie die Anpassung gerne bei uns beauftragen. 
 
-   11. Fertig!
+    11. Fertig!
 
 --------------------------------------------------------------------------------------------------------
 Wir hoffen, das Modul MITS Embedded Videos für die modified eCommerce Shopsoftware gefällt ihnen! 
