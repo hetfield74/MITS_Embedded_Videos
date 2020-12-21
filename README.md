@@ -1,3 +1,15 @@
+Mit dieser nützlichen Erweiterungen für die modified eCommerce Shopsoftware kan man Videos für YouTube oder Vimeo in den Shop integrieren. Die Videos lassen sich ganz einfach bei Produkten und Kategorien einbinden.
+
+Funktionsübersicht:
+
+- Anzahl Videos pro Artikel/Kategorie per Systemmodul einstellbar
+- Position der Videos wählbar (als zusätzliches Artikelbild, vor oder nach der Artikel- bzw. Kategoriebeschreibung)
+- YouTube-Videos werden mit der No-Cookie-Option eingebunden
+- Vimeo-Video werden mit der Option Do-Not-Track eingebunden
+- Für die Templates tpl_modified und tpl_modified_responsive sind keine Änderungen notwendig. (Andere Templates für die Anzeige "als zusätzliches Artikelbild" auf Anfrage möglich)
+
+Die Installation erfolgt ohne das Überschreiben von Dateien.
+
 ########################################################################################################
 
 MITS Embedded Videos für modified eCommerce Shopsoftware
@@ -13,9 +25,9 @@ Version: 	ab modified eCommerce Shopsoftware ab der Version 2.0.0.0
 
 Lizenzinformationen:
 --------------------------------------------------------------------------------------------------------
-Diese Erweiterung ist unter der GNU/GPL lizensiert. Eine Kopie der Lizenz liegt diesem Modul bei 
-oder kann unter der URL http://www.gnu.org/licenses/gpl-2.0.txt heruntergeladen werden. Die 
-Copyrighthinweise müssen erhalten bleiben, bzw. mit eingebaut werden. Zuwiderhandlungen verstoßen 
+Diese Erweiterung ist unter der GNU/GPL lizensiert. Eine Kopie der Lizenz liegt diesem Modul bei
+oder kann unter der URL http://www.gnu.org/licenses/gpl-2.0.txt heruntergeladen werden. Die
+Copyrighthinweise müssen erhalten bleiben, bzw. mit eingebaut werden. Zuwiderhandlungen verstoßen
 gegen das Urheberrecht und die GPL und werden zivil- und strafrechtlich verfolgt!
 
 ########################################################################################################
@@ -65,11 +77,10 @@ Die Installation des Modul MITS Embedded Videos ist ziemlich einfach.
     11. Fertig!
 
 --------------------------------------------------------------------------------------------------------
-Wir hoffen, das Modul MITS Embedded Videos für die modified eCommerce Shopsoftware gefällt ihnen! 
-Benötigen sie Unterstützung bei der indivduellen Anpassung des Modul oder haben sie eventuell doch Probleme beim Einbau? 
-Gerne können sie unseren kostenpflichtigen Support in Anspruch nehmen. 
+Wir hoffen, das Modul MITS Embedded Videos für die modified eCommerce Shopsoftware gefällt ihnen!
+Benötigen sie Unterstützung bei der indivduellen Anpassung des Modul oder haben sie eventuell doch Probleme beim Einbau?
+Gerne können sie unseren kostenpflichtigen Support in Anspruch nehmen.
 Kontaktieren sie uns einfach unter info@merz-it-service.de
-
 
 
 ########################################################################################################
