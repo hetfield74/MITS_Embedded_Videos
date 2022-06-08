@@ -26,7 +26,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       $images_count = sizeof($more_images_data);
     }
     $videos_count = 0;
-    while ($products_videos = xtc_db_fetch_array($products_videos_query,true)) {
+    while ($products_videos = xtc_db_fetch_array($products_videos_query)) {
       if ($products_videos['video_position'] == 1) {
         $add_before_description = true;
         $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);

@@ -20,7 +20,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
   if (xtc_db_num_rows($category_videos_query) > 0) {
     $add_before_description = false;
     $add_after_description = false;
-    while ($category_videos = xtc_db_fetch_array($category_videos_query,true)) {
+    while ($category_videos = xtc_db_fetch_array($category_videos_query)) {
       if ($category_videos['video_position'] == 1) {
         $add_before_description = true;
         $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url']);
