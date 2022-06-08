@@ -64,7 +64,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         $mo_img_nr = $images_count + 1;
         if ($video_url != '') {
           if (defined('MODULE_MITS_EMBEDDED_VIDEOS_TEMPLATE_CHANGED') && MODULE_MITS_EMBEDDED_VIDEOS_TEMPLATE_CHANGED == 'true') {
-            $videos_count = $videos_count++;
+            $videos_count++;
             $videos_data[$videos_count] = array(
               'PRODUCTS_VIDEO' => $video_url,
               'PRODUCTS_VIDEO_THUMBNAIL_IMAGE' => $video_thumbnail_img,
@@ -72,8 +72,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
               'PRODUCTS_VIDEO_EMBEDDED' => $video_embedded,
             );
           } else {
-
-            $more_videos_data[$mo_img_nr] = array('PRODUCTS_IMAGE' => $video);
+            $more_videos_data[$mo_img_nr] = array('PRODUCTS_IMAGE' => $video_url);
           }
         }
         $mo_img_nr++;
