@@ -46,8 +46,12 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
 
   ?>
   <div style="padding: 5px;">
-    <div style="padding: 5px; border:1px solid #aaa;background:#ffe;">
-      <div class="main div_header"><?php echo MITS_EMBEDDED_VIDEOS_HEADING; ?></div>
+    <div style="border:1px solid #aaa;background:#ffe;">
+      <div class="mits_embedded_videos_head">
+        <?php echo MITS_EMBEDDED_VIDEOS_HEADING; ?>
+        <div class="toggle_arrow"></div>
+      </div>
+      <div class="mits_embedded_videos">
       <?php
       $videos = mits_get_categories_videos($cInfo->categories_id);
       for ($i = 1, $n = $countVideoFields; $i < $n; $i++) {
@@ -89,7 +93,40 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         echo xtc_draw_hidden_field('embedded_video_id_'. ($i), (isset($videos[$i]['embedded_video_id']) ? $videos[$i]['embedded_video_id'] : ''));
       }
       ?>
+      </div>
     </div>
   </div>
+  <style>
+    .mits_embedded_videos_head{
+      cursor:pointer;
+      padding: 12px 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .mits_embedded_videos{
+      padding: 10px;
+    }
+    .toggle_arrow {
+      background: url("images/arrow_down.gif") center center no-repeat;
+      float: right;
+      width: 16px;
+      height: 16px;
+    }
+    .toggle_arrow_up {
+      background: url("images/arrow_up.gif") center center no-repeat;
+      float: right;
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $(".mits_embedded_videos").toggle();
+      $(".mits_embedded_videos_head").click(function () {
+        $(".mits_embedded_videos").slideToggle('slow');
+        $(".mits_embedded_videos_head div").toggleClass("toggle_arrow toggle_arrow_up");
+      });
+    });
+  </script>
   <?php
 }
