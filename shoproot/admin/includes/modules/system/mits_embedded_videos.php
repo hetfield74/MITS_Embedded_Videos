@@ -76,6 +76,7 @@ class mits_embedded_videos {
 
   function remove() {
     xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key in ('" . implode("', '", $this->keys()) . "')");
+    xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key LIKE '" . $this->name . "_%'");
     xtc_db_query("DROP TABLE " . TABLE_MITS_EMBEDDED_VIDEOS);
   }
 
