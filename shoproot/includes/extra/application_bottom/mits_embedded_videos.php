@@ -15,7 +15,7 @@
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true') {
   if (!is_file('templates/' . CURRENT_TEMPLATE . '/javascript/extra/colorbox.js.php') && strstr(CURRENT_TEMPLATE, 'tpl_modified')) {
     ?>
-    <style>.embedded_video{position:relative;height:0;padding-bottom:56.25%}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}</style>
+    <style>.embedded_video{position:relative;height:0;padding-bottom:56.25%}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}.embedded_video .video-wall{width:100% !important;}</style>
     <script>
       $(document).ready(function(){$(".youtube, .vimeo").colorbox({iframe:true, width:"780", height:"560", maxWidth: "90%", maxHeight: "90%", fixed: true});});
       $("a.cbimages[href^='https://www.youtube-nocookie.com']").prop('class', 'youtube cboxElement');
