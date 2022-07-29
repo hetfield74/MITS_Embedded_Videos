@@ -37,7 +37,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
         $product->data['products_description'] = $product->data['products_description'] . $video;
       }
-      if ($products_videos['video_position'] == 3) {
+      if ($products_videos['video_position'] == 3 && $products_videos['video_source'] != 2) {
         $add_more_images = true;
         $video_embedded = $video_url = $video_thumbnail_img = $video_midi_img ='';
         if ($products_videos['video_source'] == 0 && !empty($products_videos['video_url'])) {
@@ -77,6 +77,10 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         }
         $mo_img_nr++;
         $images_count++;
+      } elseif ($products_videos['video_position'] == 3 && $products_videos['video_source'] == 2) {
+        $add_after_description = true;
+        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+        $product->data['products_description'] = $product->data['products_description'] . $video;
       }
     }
     if ($add_more_images !== false) {

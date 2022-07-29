@@ -70,26 +70,21 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
       <script src="https://player.vimeo.com/api/player.js"></script>
       ';
     }
-  } elseif ($video_source == 3) {
-    /*
-    if (!empty($video_source_id)) {
-      $video_code = '
-      <div class="embedded_video" style="padding:75.95% 0 0 0;position:relative;">
-        <iframe src="https://player.vimeo.com/video/' . $video_source_id . '?dnt=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </div>
-      <script src="https://player.vimeo.com/api/player.js"></script>
-      ';
-    }
+  } elseif ($video_source == 2) {
     if (!empty($video_url)) {
-
+      if (!strpos($video_url, '://')) $video_url = DIR_WS_BASE . $video_url;
       $video_code = '
-      <div class="embedded_video" style="padding:75.95% 0 0 0;position:relative;">
-        <iframe src="https://player.vimeo.com/video/' . $vid . '?dnt=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="html5_video">
+        <video width="640" height="360" controls poster="">
+          <source src="' . $video_url . '" type="video/mp4">
+          <div class="errormessage">' . VIDEO_CANNOT_BE_PLAYED . ' <a href="' . $video_url . '">' . VIDEO_DOWNLOAD_LINK . '</a> abrufen.</div>
+        </video>
       </div>
-      <script src="https://player.vimeo.com/api/player.js"></script>
       ';
+    } else {
+      return false;
     }
-    */
+
   }
 
   return $video_code;

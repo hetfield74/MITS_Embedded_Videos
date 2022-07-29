@@ -26,19 +26,23 @@ define('MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_STATUS_DESC', 'Modules status
 define('MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_TITLE', 'Sort order');
 define('MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_DESC', 'Order of processing. Smallest number is executed first.');
 
-define('MITS_EMBEDDED_VIDEOS_POSITION_CAT1', 'Vor der Kategoriebeschreibung');
-define('MITS_EMBEDDED_VIDEOS_POSITION_CAT2', 'Nach der Kategoriebeschreibung');
+define('MITS_EMBEDDED_VIDEOS_POSITION_CAT1', 'Before the category description');
+define('MITS_EMBEDDED_VIDEOS_POSITION_CAT2', 'After the category description');
 
-define('MITS_EMBEDDED_VIDEOS_POSITION_1', 'Vor der Artikelbeschreibung');
-define('MITS_EMBEDDED_VIDEOS_POSITION_2', 'Nach der Artikelbeschreibung');
-define('MITS_EMBEDDED_VIDEOS_POSITION_3', 'Am Ende bei den zus&auml;tzlichen Artikelbildern');
-define('MITS_EMBEDDED_VIDEOS_POSITION_4', 'Als zus&auml;tzlicher Tab (angepasstes Template erforderlich!)');
+define('MITS_EMBEDDED_VIDEOS_SOURCE_1', 'YouTube');
+define('MITS_EMBEDDED_VIDEOS_SOURCE_2', 'Vimeo');
+define('MITS_EMBEDDED_VIDEOS_SOURCE_3', 'HTML5 with mp4');
+
+define('MITS_EMBEDDED_VIDEOS_POSITION_1', 'Before the article description');
+define('MITS_EMBEDDED_VIDEOS_POSITION_2', 'After the article description');
+define('MITS_EMBEDDED_VIDEOS_POSITION_3', 'At the end of the additional article images (only YouTube/Vimeo)');
+define('MITS_EMBEDDED_VIDEOS_POSITION_4', 'As an additional tab (adjusted template required!)');
 
 define('MITS_EMBEDDED_VIDEOS_HEADING', 'MITS Embedded Videos <span style="white-space:nowrap;">&copy; by <span style="padding:2px;background:#ffe;color:#6a9;font-weight:bold;">Hetfield (MerZ IT-SerVice)</span></span>');
 define('MITS_EMBEDDED_VIDEOS_INFO', '');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_ID', 'Video-ID');
-define('MITS_EMBEDDED_VIDEOS_VIDEO_SOURCE', 'Video-Quelle');
-define('MITS_EMBEDDED_VIDEOS_VIDEO_URL', 'Video-URL (alternativ zu ID)');
-define('MITS_EMBEDDED_VIDEOS_VIDEO_URL_INFO', 'Alternativ zur Eingabe von ID k&ouml;nnen Sie hier auch einfach die URL eintragen. Die Video-Quelle muss aber angegeben werden.');
-define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION', 'Video-Position');
-define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION_INFO', 'W&auml;hlen Sie hier aus, wo das Video angezeigt werden soll. F&uuml;r die Auswahl "<strong>Am Ende bei den zus&auml;tzlichen Artikelbildern</strong>" sind &Auml;nderungen am Template erforderlich, falls nicht die Templates <i>tpl_modified</i> oder <i>tpl_modified_responsive</i> verwendet werden!');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_SOURCE', 'Video source');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_URL', 'Video URL (alternative to ID)');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_URL_INFO', 'Mandatory information on "HTML5 with MP4"! With YouTube/Vimeo, you can also simply enter the URL as an alternative to entering the ID. The video source must always be specified.');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION', 'Video position');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION_INFO', 'Select where the video should be displayed here. For the selection "<strong>at the end of the additional article images</strong>", changes to the template are required, unless the templates <i>tpl_modified</i> or <i>tpl_modified_responsive</i> are used!');

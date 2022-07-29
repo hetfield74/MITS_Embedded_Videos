@@ -12,7 +12,7 @@
  * --------------------------------------------------------------
  */
 ?>
-<style>.embedded_video{position:relative;height:0;padding-bottom:56.25%;margin:10px auto}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}.embedded_video .video-wall{width:100% !important;}</style>
+<style>.html5_video video{width:100%;height:auto}.embedded_video{position:relative;height:0;padding-bottom:56.25%;margin:10px auto}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}.embedded_video .video-wall{width:100% !important;}</style>
 <script>
   $(document).ready(function(){
     $(".youtube, .vimeo").colorbox({iframe:true, width:"780", height:"560", maxWidth: "90%", maxHeight: "90%", fixed: true, close: '<i class="fas fa-times"></i>'});

@@ -20,7 +20,7 @@ class mits_embedded_videos {
   function __construct() {
     $this->code = 'mits_embedded_videos';
     $this->name = 'MODULE_' . strtoupper($this->code);
-    $this->version = '1.1.1';
+    $this->version = '1.2';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -28,6 +28,10 @@ class mits_embedded_videos {
 
     $version_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_VERSION'");
     if (xtc_db_num_rows($version_query)) {
+      $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'status'");
+      if (xtc_db_num_rows($check_table_query) > 0) {
+        xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CHANGE `status` `video_status` TINYINT(1) NOT NULL DEFAULT '1', CHANGE `sorting` `video_sorting` TINYINT(1) NOT NULL DEFAULT '0'");
+      }
       xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
     } elseif (defined($this->name . '_STATUS')) {
       xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())");
@@ -42,8 +46,9 @@ class mits_embedded_videos {
   }
 
   function display() {
-    return array('text' => '<br /><div align="center">' . xtc_button(BUTTON_SAVE) .
-      xtc_button_link(BUTTON_CANCEL, xtc_href_link(FILENAME_MODULE_EXPORT, 'set=' . $_GET['set'] . '&module=' . $this->code)) . "</div>");
+    return array(
+      'text' => '<br /><div align="center">' . xtc_button(BUTTON_SAVE) .
+        xtc_button_link(BUTTON_CANCEL, xtc_href_link(FILENAME_MODULE_EXPORT, 'set=' . $_GET['set'] . '&module=' . $this->code)) . "</div>");
   }
 
   function check() {
@@ -68,8 +73,8 @@ class mits_embedded_videos {
 					  `video_source` int(1) NOT NULL default '0',
 					  `video_url` varchar(255) NULL,
 					  `video_position` int(1) NOT NULL default '1',					  
-					  `status` tinyint(1) NOT NULL default '1',
-					  `sorting` tinyint(1) NOT NULL default '0',
+					  `video_status` tinyint(1) NOT NULL default '1',
+					  `video_sorting` tinyint(1) NOT NULL default '0',
 					  PRIMARY KEY  (`embedded_video_id`)
 					)");
   }
