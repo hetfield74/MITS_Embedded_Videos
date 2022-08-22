@@ -17,7 +17,7 @@ class cat_mits_embedded_videos {
   function __construct() {
     $this->code = 'cat_mits_embedded_videos';
     $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-    $this->version = '1.2';
+    $this->version = '1.3';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -76,8 +76,8 @@ class cat_mits_embedded_videos {
         'video_source'     => xtc_db_prepare_input($categories_data['video_source_' . ($i)]),
         'video_url'        => xtc_db_prepare_input($categories_data['video_url_' . ($i)]),
         'video_position'   => xtc_db_prepare_input($categories_data['video_position_' . ($i)]),
-        'status'           => xtc_db_prepare_input($categories_data['video_status_' . ($i)]),
-        'sorting'          => xtc_db_prepare_input($categories_data['video_sorting_' . ($i)]),
+        'video_status'     => xtc_db_prepare_input($categories_data['video_status_' . ($i)]),
+        'video_sorting'    => xtc_db_prepare_input($categories_data['video_sorting_' . ($i)]),
       );
 
       if (isset($categories_data['embedded_video_id_' . ($i)]) && !empty($categories_data['embedded_video_id_' . ($i)])) {
