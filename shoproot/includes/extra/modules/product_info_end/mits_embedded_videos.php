@@ -13,7 +13,7 @@
  */
 
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true') {
-  $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . (int)$product->data['products_id'] . " ORDER BY video_nr DESC";
+  $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . (int)$product->data['products_id'] . " AND languages_id = " . (int)$_SESSION['languages_id'] . " ORDER BY video_nr DESC";
   $products_videos_query = xtc_db_query($videos_query);
   if (xtc_db_num_rows($products_videos_query) > 0) {
     $add_before_description = false;
@@ -29,34 +29,34 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
     while ($products_videos = xtc_db_fetch_array($products_videos_query)) {
       if ($products_videos['video_position'] == 1) {
         $add_before_description = true;
-        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
         $product->data['products_description'] = $video . $product->data['products_description'];
       }
       if ($products_videos['video_position'] == 2) {
         $add_after_description = true;
-        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
         $product->data['products_description'] = $product->data['products_description'] . $video;
       }
       if ($products_videos['video_position'] == 3 && $products_videos['video_source'] != 2) {
         $add_more_images = true;
         $video_embedded = $video_url = $video_thumbnail_img = $video_midi_img ='';
         if ($products_videos['video_source'] == 0 && !empty($products_videos['video_url'])) {
-          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
           $video_url = mits_get_youtube_embedded_url($products_videos['video_url']);
           $video_thumbnail_img = DIR_WS_BASE . DIR_WS_IMAGES . 'youtube_thumb.png';
           $video_midi_img = DIR_WS_BASE . DIR_WS_IMAGES . 'youtube_midi.png';
         } elseif ($products_videos['video_source'] == 0 && !empty($products_videos['video_source_id'])) {
-          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
           $video_url = 'https://www.youtube-nocookie.com/embed/' . $products_videos['video_source_id'];
           $video_thumbnail_img = DIR_WS_BASE . DIR_WS_IMAGES . 'youtube_thumb.png';
           $video_midi_img = DIR_WS_BASE . DIR_WS_IMAGES . 'youtube_midi.png';
         } elseif ($products_videos['video_source'] == 1 && !empty($products_videos['video_url'])) {
-          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
           $video_url = mits_get_vimeo_embedded_url($products_videos['video_url']);
           $video_thumbnail_img = DIR_WS_BASE . DIR_WS_IMAGES . 'vimeo_thumb.png';
           $video_midi_img = DIR_WS_BASE . DIR_WS_IMAGES . 'vimeo_midi.png';
         } elseif ($products_videos['video_source'] == 1 && !empty($products_videos['video_source_id'])) {
-          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+          $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
           $video_url = 'https://player.vimeo.com/video/' . $products_videos['video_source_id'] . '?dnt=1&title=0&byline=0&portrait=0';
           $video_thumbnail_img = DIR_WS_BASE . DIR_WS_IMAGES . 'vimeo_thumb.png';
           $video_midi_img = DIR_WS_BASE . DIR_WS_IMAGES . 'vimeo_midi.png';
@@ -79,11 +79,11 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         $images_count++;
       } elseif ($products_videos['video_position'] == 3 && $products_videos['video_source'] == 2) {
         $add_after_description = true;
-        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url']);
+        $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
         $product->data['products_description'] = $product->data['products_description'] . $video;
       }
     }
-    if ($add_more_images !== false) {
+    if ($add_more_images === true) {
       if (defined('MODULE_MITS_EMBEDDED_VIDEOS_TEMPLATE_CHANGED') && MODULE_MITS_EMBEDDED_VIDEOS_TEMPLATE_CHANGED == 'true') {
         $videos_data = array_reverse($videos_data);
         $info_smarty->assign('videos', $videos_data);
@@ -93,10 +93,10 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         $info_smarty->assign('more_images', $more_images_data);
       }
     }
-    if ($add_before_description == true) {
+    if ($add_before_description === true) {
       $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description']));
     }
-    if ($add_after_description == true) {
+    if ($add_after_description === true) {
       $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description']));
     }
   }

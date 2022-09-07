@@ -20,7 +20,7 @@ class mits_embedded_videos {
   function __construct() {
     $this->code = 'mits_embedded_videos';
     $this->name = 'MODULE_' . strtoupper($this->code);
-    $this->version = '1.3';
+    $this->version = '1.4';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -31,6 +31,11 @@ class mits_embedded_videos {
       $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'status'");
       if (xtc_db_num_rows($check_table_query) > 0) {
         xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CHANGE `status` `video_status` TINYINT(1) NOT NULL DEFAULT '1', CHANGE `sorting` `video_sorting` TINYINT(1) NOT NULL DEFAULT '0'");
+      }
+      $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'languages_id'");
+      if (!xtc_db_num_rows($check_table_query)) {
+        xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ADD `languages_id` INT(11) NOT NULL AFTER categories_id, ADD `video_title` TINYTEXT NULL AFTER video_url");
+        xtc_db_query("UPDATE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` SET `languages_id` = '2' WHERE `languages_id` = 0");
       }
       xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
     } elseif (defined($this->name . '_STATUS')) {

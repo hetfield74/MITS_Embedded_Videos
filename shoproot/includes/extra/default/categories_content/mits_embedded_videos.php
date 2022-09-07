@@ -15,7 +15,7 @@
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true'
   && basename($PHP_SELF) != FILENAME_ADVANCED_SEARCH_RESULT && isset($current_category_id) && $current_category_id != 0
 ) {
-  $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . (int)$current_category_id . " ORDER BY video_nr DESC";
+  $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . (int)$current_category_id . " AND languages_id = " . (int)$_SESSION['languages_id'] . " ORDER BY video_nr DESC";
   $category_videos_query = xtc_db_query($videos_query);
   if (xtc_db_num_rows($category_videos_query) > 0) {
     $add_before_description = false;
@@ -23,18 +23,18 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
     while ($category_videos = xtc_db_fetch_array($category_videos_query)) {
       if ($category_videos['video_position'] == 1) {
         $add_before_description = true;
-        $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url']);
+        $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url'], $category_videos['video_title']);
         $category['categories_description'] = $video . $category['categories_description'];
       }
       if ($category_videos['video_position'] == 2) {
         $add_after_description = true;
-        $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url']);
+        $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url'], $category_videos['video_title']);
         $category['categories_description'] = $category['categories_description'] . $video;
       }
       if ($category_videos['video_position'] == 3) {
         if ($category_videos['video_source'] == 2) {
           $add_after_description = true;
-          $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url']);
+          $video = mits_get_embedded_video($category_videos['video_source'], $category_videos['video_source_id'], $category_videos['video_url'], $category_videos['video_title']);
           $category['categories_description'] = $category['categories_description'] . $video;
         } else {
           $add_more_images = true;

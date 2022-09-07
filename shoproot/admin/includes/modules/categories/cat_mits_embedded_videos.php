@@ -17,7 +17,7 @@ class cat_mits_embedded_videos {
   function __construct() {
     $this->code = 'cat_mits_embedded_videos';
     $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-    $this->version = '1.3';
+    $this->version = '1.4';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -61,47 +61,49 @@ class cat_mits_embedded_videos {
   }
 
 
-  function insert_category_after($categories_data, $categories_id) {
+  function insert_category_desc($sql_data_array, $categories_data, $categories_id, $language_id) {
 
     defined('MODULE_MITS_EMBEDDED_VIDEOS_COUNT') or define('MODULE_MITS_EMBEDDED_VIDEOS_COUNT', 3);
     $countVideoFields = (int)MODULE_MITS_EMBEDDED_VIDEOS_COUNT + 1;
 
-    for ($i = 1, $n = $countVideoFields; $i < $n; $i++) {
+    for ($v = 1, $c = $countVideoFields; $v < $c; $v++) {
 
       $sql_video_data_array = array(
         'products_id'      => 0,
-        'categories_id'    => $categories_id,
-        'video_nr'         => xtc_db_prepare_input($categories_data['video_nr_' . ($i)]),
-        'video_source_id'  => xtc_db_prepare_input($categories_data['video_source_id_' . ($i)]),
-        'video_source'     => xtc_db_prepare_input($categories_data['video_source_' . ($i)]),
-        'video_url'        => xtc_db_prepare_input($categories_data['video_url_' . ($i)]),
-        'video_position'   => xtc_db_prepare_input($categories_data['video_position_' . ($i)]),
-        'video_status'     => xtc_db_prepare_input($categories_data['video_status_' . ($i)]),
-        'video_sorting'    => xtc_db_prepare_input($categories_data['video_sorting_' . ($i)]),
+        'categories_id'    => (int)$categories_id,
+        'languages_id'     => $language_id,
+        'video_nr'         => isset($categories_data['video_nr_' . $v . '_' . $language_id]) && !empty($categories_data['video_nr_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_nr_' . $v . '_' . $language_id]) : '',
+        'video_source_id'  => isset($categories_data['video_source_id_' . $v . '_' . $language_id]) && !empty($categories_data['video_source_id_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_source_id_' . $v . '_' . $language_id]) : '',
+        'video_source'     => isset($categories_data['video_source_' . $v . '_' . $language_id]) && !empty($categories_data['video_source_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_source_' . $v . '_' . $language_id]) : '',
+        'video_url'        => isset($categories_data['video_url_' . $v . '_' . $language_id]) && !empty($categories_data['video_url_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_url_' . $v . '_' . $language_id]) : '',
+        'video_title'      => isset($categories_data['video_title_' . $v . '_' . $language_id]) && !empty($categories_data['video_title_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_title_' . $v . '_' . $language_id]) : '',
+        'video_position'   => isset($categories_data['video_position_' . $v . '_' . $language_id]) && !empty($categories_data['video_position_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_position_' . $v . '_' . $language_id]) : '',
+        'video_status'     => isset($categories_data['video_status_' . $v . '_' . $language_id]) && !empty($categories_data['video_status_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_status_' . $v . '_' . $language_id]) : '',
+        'video_sorting'    => isset($categories_data['video_sorting_' . $v . '_' . $language_id]) && !empty($categories_data['video_sorting_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_sorting_' . $v . '_' . $language_id]) : '',
       );
 
-      if (isset($categories_data['embedded_video_id_' . ($i)]) && !empty($categories_data['embedded_video_id_' . ($i)])) {
-        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = '" . $categories_id . "' AND embedded_video_id = " . $categories_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $i);
+      if (isset($categories_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($categories_data['embedded_video_id_' . $v . '_' . $language_id])) {
+        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $v);
       } else {
-        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = '" . $categories_id . "' AND video_nr = " . $categories_data['video_nr_' . ($i)]);
+        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
       }
 
       if (xtc_db_num_rows($check_query) > 0) {
-        if (empty($categories_data['video_url_' . ($i)]) && empty($categories_data['video_source_id_' . ($i)])) {
-          if (isset($categories_data['embedded_video_id_' . ($i)]) && !empty($categories_data['embedded_video_id_' . ($i)])) {
-            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $categories_data['video_nr_' . ($i)]);
+        if (empty($categories_data['video_url_' . $v . '_' . $language_id]) && empty($categories_data['video_source_id_' . $v . '_' . $language_id])) {
+          if (isset($categories_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($categories_data['embedded_video_id_' . $v . '_' . $language_id])) {
+            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
           } else {
-            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND video_nr = " . $categories_data['video_nr_' . ($i)]);
+            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
           }
         } else {
-          if (isset($categories_data['embedded_video_id_' . ($i)]) && !empty($categories_data['embedded_video_id_' . ($i)])) {
-            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "categories_id = " . $categories_id . " and embedded_video_id = " . $categories_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $categories_data['video_nr_' . ($i)]);
+          if (isset($categories_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($categories_data['embedded_video_id_' . $v . '_' . $language_id])) {
+            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
           } else {
-            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "categories_id = " . $categories_id . " and video_nr = " . $categories_data['video_nr_' . ($i)]);
+            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "categories_id = " . $categories_id . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
           }
         }
       } else {
-        if (!empty($categories_data['video_url_' . ($i)]) || !empty($categories_data['video_source_id_' . ($i)])) {
+        if ((isset($categories_data['video_url_' . $v . '_' . $language_id]) && !empty($categories_data['video_url_' . $v . '_' . $language_id])) || (isset($categories_data['video_source_id_' . $v . '_' . $language_id]) && !empty($categories_data['video_source_id_' . $v . '_' . $language_id]))) {
           xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array);
         }
       }
@@ -111,47 +113,49 @@ class cat_mits_embedded_videos {
   }
 
 
-  function insert_product_after($products_data, $products_id) {
+  function insert_product_desc($sql_data_array, $products_data, $products_id, $language_id) {
 
     defined('MODULE_MITS_EMBEDDED_VIDEOS_COUNT') or define('MODULE_MITS_EMBEDDED_VIDEOS_COUNT', 3);
     $countVideoFields = (int)MODULE_MITS_EMBEDDED_VIDEOS_COUNT + 1;
 
-    for ($i = 1, $n = $countVideoFields; $i < $n; $i++) {
+    for ($v = 1, $n = $countVideoFields; $v < $n; $v++) {
 
       $sql_video_data_array = array(
         'products_id'      => (int)$products_id,
         'categories_id'    => 0,
-        'video_nr'         => xtc_db_prepare_input($products_data['video_nr_' . ($i)]),
-        'video_source_id'  => xtc_db_prepare_input($products_data['video_source_id_' . ($i)]),
-        'video_source'     => xtc_db_prepare_input($products_data['video_source_' . ($i)]),
-        'video_url'        => xtc_db_prepare_input($products_data['video_url_' . ($i)]),
-        'video_position'   => xtc_db_prepare_input($products_data['video_position_' . ($i)]),
-        'video_status'     => xtc_db_prepare_input($products_data['video_status_' . ($i)]),
-        'video_sorting'    => xtc_db_prepare_input($products_data['video_sorting_' . ($i)]),
+        'languages_id'     => $language_id,
+        'video_nr'         => isset($products_data['video_nr_' . $v . '_' . $language_id]) && !empty($products_data['video_nr_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_nr_' . $v . '_' . $language_id]) : '',
+        'video_source_id'  => isset($products_data['video_source_id_' . $v . '_' . $language_id]) && !empty($products_data['video_source_id_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_source_id_' . $v . '_' . $language_id]) : '',
+        'video_source'     => isset($products_data['video_source_' . $v . '_' . $language_id]) && !empty($products_data['video_source_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_source_' . $v . '_' . $language_id]) : '',
+        'video_url'        => isset($products_data['video_url_' . $v . '_' . $language_id]) && !empty($products_data['video_url_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_url_' . $v . '_' . $language_id]) : '',
+        'video_title'      => isset($products_data['video_title_' . $v . '_' . $language_id]) && !empty($products_data['video_title_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_title_' . $v . '_' . $language_id]) : '',
+        'video_position'   => isset($products_data['video_position_' . $v . '_' . $language_id]) && !empty($products_data['video_position_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_position_' . $v . '_' . $language_id]) : '',
+        'video_status'     => isset($products_data['video_status_' . $v . '_' . $language_id]) && !empty($products_data['video_status_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_status_' . $v . '_' . $language_id]) : '',
+        'video_sorting'    => isset($products_data['video_sorting_' . $v . '_' . $language_id]) && !empty($products_data['video_nr_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($products_data['video_sorting_' . $v . '_' . $language_id]) : '',
       );
 
-      if (isset($products_data['embedded_video_id_' . ($i)]) && !empty($products_data['embedded_video_id_' . ($i)])) {
-        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = '" . $products_id . "' AND embedded_video_id = " . $products_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $i);
+      if (isset($products_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($products_data['embedded_video_id_' . $v . '_' . $language_id])) {
+        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $v);
       } else {
-        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = '" . $products_id . "' AND video_nr = " . $products_data['video_nr_' . ($i)]);
+        $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
       }
 
       if (xtc_db_num_rows($check_query) > 0) {
-        if (empty($products_data['video_url_' . ($i)]) && empty($products_data['video_source_id_' . ($i)])) {
-          if (isset($products_data['embedded_video_id_' . ($i)]) && !empty($products_data['embedded_video_id_' . ($i)])) {
-            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $products_data['video_nr_' . ($i)]);
+        if (empty($products_data['video_url_' . $v . '_' . $language_id]) && empty($products_data['video_source_id_' . $v . '_' . $language_id])) {
+          if (isset($products_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($products_data['embedded_video_id_' . $v . '_' . $language_id])) {
+            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
           } else {
-            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND video_nr = " . $products_data['video_nr_' . ($i)]);
+            xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
           }
         } else {
-          if (isset($products_data['embedded_video_id_' . ($i)]) && !empty($products_data['embedded_video_id_' . ($i)])) {
-            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "products_id = " . $products_id . " and embedded_video_id = " . $products_data['embedded_video_id_' . ($i)] . " AND video_nr = " . $products_data['video_nr_' . ($i)]);
+          if (isset($products_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($products_data['embedded_video_id_' . $v . '_' . $language_id])) {
+            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
           } else {
-            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "products_id = " . $products_id . " and video_nr = " . $products_data['video_nr_' . ($i)]);
+            xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array, 'update', "products_id = " . $products_id . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
           }
         }
       } else {
-        if (!empty($products_data['video_url_' . ($i)]) || !empty($products_data['video_source_id_' . ($i)])) {
+        if ((isset($products_data['video_url_' . $v . '_' . $language_id]) && !empty($products_data['video_url_' . $v . '_' . $language_id])) || (isset($products_data['video_source_id_' . $v . '_' . $language_id]) && !empty($products_data['video_source_id_' . $v . '_' . $language_id]))) {
           xtc_db_perform(TABLE_MITS_EMBEDDED_VIDEOS, $sql_video_data_array);
         }
       }
@@ -159,5 +163,6 @@ class cat_mits_embedded_videos {
     }
 
   }
+
 
 }

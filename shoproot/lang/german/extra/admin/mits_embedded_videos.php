@@ -46,3 +46,5 @@ define('MITS_EMBEDDED_VIDEOS_VIDEO_URL', 'Video-URL (alternativ zu ID)');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_URL_INFO', 'Pflichtangabe bei "HTML5 mit mp4"! Bei YouTube/Vimeo k&ouml;nnen Sie hier auch als Alternative zur Eingabe der ID einfach die URL eintragen. Die Video-Quelle muss aber immer angegeben werden.');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION', 'Video-Position');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION_INFO', 'W&auml;hlen Sie hier aus, wo das Video angezeigt werden soll. F&uuml;r die Auswahl "<strong>Am Ende bei den zus&auml;tzlichen Artikelbildern</strong>" sind &Auml;nderungen am Template erforderlich, falls nicht die Templates <i>tpl_modified</i> oder <i>tpl_modified_responsive</i> verwendet werden!');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_TITLE', 'Video-Titel');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_TITLE_INFO', 'Unterhalb des Videos wird dieser Text angezeigt als Beschreibung zum Video bei Positionierung vor oder nach der Beschreibung. Nicht mit Artikeln bei den zus&auml;tzlichen Artikelbildern!');

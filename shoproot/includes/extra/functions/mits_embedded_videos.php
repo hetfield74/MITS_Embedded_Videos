@@ -34,7 +34,10 @@ function mits_get_vimeo_embedded_url($url) {
   }
 }
 
-function mits_get_embedded_video($video_source, $video_source_id = '', $video_url = '') {
+function mits_get_embedded_video($video_source, $video_source_id = '', $video_url = '', $video_title = '') {
+  if (!empty($video_title)) {
+    $video_title = '<div class="embedded_video_title">' . $video_title . '</div>';
+  }
   if ($video_source == 0) {
     if (!empty($video_source_id)) {
       $video_code = '
@@ -87,5 +90,5 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
 
   }
 
-  return $video_code;
+  return $video_code . $video_title;
 }

@@ -46,3 +46,5 @@ define('MITS_EMBEDDED_VIDEOS_VIDEO_URL', 'Video URL (alternative to ID)');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_URL_INFO', 'Mandatory information on "HTML5 with MP4"! With YouTube/Vimeo, you can also simply enter the URL as an alternative to entering the ID. The video source must always be specified.');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION', 'Video position');
 define('MITS_EMBEDDED_VIDEOS_VIDEO_POSITION_INFO', 'Select where the video should be displayed here. For the selection "<strong>at the end of the additional article images</strong>", changes to the template are required, unless the templates <i>tpl_modified</i> or <i>tpl_modified_responsive</i> are used!');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_TITLE', 'Video-Title');
+define('MITS_EMBEDDED_VIDEOS_VIDEO_TITLE_INFO', 'Below the video, this text is displayed as a description of the video for positioning before or after the description. Not with articles on the additional article images!');
