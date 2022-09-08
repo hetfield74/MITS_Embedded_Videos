@@ -2,7 +2,7 @@
 (c) Copyright 2020 by Hetfield - MerZ IT-SerVice
 
 - Author: 	Hetfield - https://www.merz-it-service.de
-- Version: 	ab modified eCommerce Shopsoftware ab der Version 2.0.0.0
+- Version: 	ab modified eCommerce Shopsoftware ab der Version 2.0.7.0
 
 <hr />
 
@@ -14,7 +14,10 @@ Funktionsübersicht:
 - Position der Videos wählbar (als zusätzliches Artikelbild, vor oder nach der Artikel- bzw. Kategoriebeschreibung)
 - YouTube-Videos werden mit der No-Cookie-Option eingebunden
 - Vimeo-Video werden mit der Option Do-Not-Track eingebunden
+- Eigene .mp4-Dateien integrierbar als HTML5-Video
 - Für die Templates *tpl_modified* und *tpl_modified_responsive* sind keine Änderungen notwendig.
+- Videos sind sprachabhängig hinterlegbar
+- Titel als Videobeschreibung unterhalb des Videos hinzugefügt bei Videoposition vor oder nach der Beschreibung
 
 Die Installation erfolgt ohne das Überschreiben von Dateien.
 
@@ -33,7 +36,7 @@ gegen das Urheberrecht und die GPL und werden zivil- und strafrechtlich verfolgt
 
 ### Installation
 
-Systemvoraussetzung: Funktionsfähige modified eCommerce Shopsoftware ab der Version 2.0.0.0
+Systemvoraussetzung: Funktionsfähige modified eCommerce Shopsoftware ab der Version 2.0.7.0
 
 Vor der Installation des Moduls sichern sie bitte komplett ihre aktuelle Shopinstallation (Dateien und Datenbank)!
 Für eventuelle Schäden übernehmen wir keine Haftung!
@@ -43,7 +46,7 @@ Die Installation des Modul **MITS Embedded Videos** ist ziemlich einfach.
 
 1. Führen Sie zuerst eine komplette Sicherung des Shops durch. Sichern Sie dabei die Datenbank und alle Dateien Ihrer Shopinstallation. 
 
-2. Falls der admin-Order des Shops unbenannt wurde, dann entsprechnd auch den Ordner *admin* im Verzeichns shoproot des Moduls vor dem Hochladen ebenfalls entsprechend umbenennen!
+2. Falls der admin-Order des Shops unbenannt wurde, dann entsprechend auch den Ordner *admin* im Verzeichnis shoproot des Moduls vor dem Hochladen ebenfalls entsprechend umbenennen!
 
 3. Kopieren Sie anschließend einfach alle Dateien in dem Verzeichnis *shoproot* aus dem Modulpaket  in das Hauptverzeichnis ihrer bestehenden modified eCommerce Shopsoftware Installation. 
    Es werden dabei keine Dateien überschrieben!
