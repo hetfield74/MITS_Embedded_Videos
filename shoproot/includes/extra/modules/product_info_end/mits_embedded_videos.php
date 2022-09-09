@@ -39,7 +39,8 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       }
       if ($products_videos['video_position'] == 3 && $products_videos['video_source'] != 2) {
         $add_more_images = true;
-        $video_embedded = $video_url = $video_thumbnail_img = $video_midi_img ='';
+        $video_embedded = $video_url = $video_thumbnail_img = $video_midi_img = '';
+        $video_title = $products_videos['video_title'];
         if ($products_videos['video_source'] == 0 && !empty($products_videos['video_url'])) {
           $video_embedded = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
           $video_url = mits_get_youtube_embedded_url($products_videos['video_url']);
@@ -70,6 +71,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
               'PRODUCTS_VIDEO_THUMBNAIL_IMAGE' => $video_thumbnail_img,
               'PRODUCTS_VIDEO_MIDI_IMAGE' => $video_midi_img,
               'PRODUCTS_VIDEO_EMBEDDED' => $video_embedded,
+              'PRODUCTS_VIDEO_TITLE' => $video_title,
             );
           } else {
             $more_videos_data[$mo_img_nr] = array('PRODUCTS_IMAGE' => $video_url);

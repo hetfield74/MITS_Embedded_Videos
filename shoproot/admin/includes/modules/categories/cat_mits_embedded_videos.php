@@ -109,6 +109,7 @@ class cat_mits_embedded_videos {
       }
 
     }
+    return $sql_data_array;
 
   }
 
@@ -161,6 +162,7 @@ class cat_mits_embedded_videos {
       }
 
     }
+    return $sql_data_array;
 
   }
 
