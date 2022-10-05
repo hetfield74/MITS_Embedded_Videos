@@ -23,7 +23,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       <div class="mits_embedded_videos">
         <?php
         $videos = mits_get_products_videos($pInfo->products_id, $languages[$i]['id']);
-        for ($v = 1, $n = $countVideoFields; $v < $n; $v++) {
+        for ($v = 1, $nv = $countVideoFields; $v < $nv; $v++) {
           ?>
           <div style="padding: 5px 0;">
             <table class="tableInput">

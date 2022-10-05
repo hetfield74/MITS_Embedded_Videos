@@ -17,7 +17,7 @@ class cat_mits_embedded_videos {
   function __construct() {
     $this->code = 'cat_mits_embedded_videos';
     $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-    $this->version = '1.4';
+    $this->version = '1.4.2';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -84,11 +84,11 @@ class cat_mits_embedded_videos {
 
       if (isset($categories_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($categories_data['embedded_video_id_' . $v . '_' . $language_id])) {
         $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $v);
-      } else {
+      } elseif (isset($categories_data['video_nr_' . $v . '_' . $language_id]) && is_numeric($categories_data['video_nr_' . $v . '_' . $language_id])) {
         $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
       }
 
-      if (xtc_db_num_rows($check_query) > 0) {
+      if (isset($check_query) && xtc_db_num_rows($check_query) > 0) {
         if (empty($categories_data['video_url_' . $v . '_' . $language_id]) && empty($categories_data['video_source_id_' . $v . '_' . $language_id])) {
           if (isset($categories_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($categories_data['embedded_video_id_' . $v . '_' . $language_id])) {
             xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . $categories_id . " AND embedded_video_id = " . $categories_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $categories_data['video_nr_' . $v . '_' . $language_id]);
@@ -137,11 +137,11 @@ class cat_mits_embedded_videos {
 
       if (isset($products_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($products_data['embedded_video_id_' . $v . '_' . $language_id])) {
         $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $v);
-      } else {
+      } elseif (isset($products_data['video_nr_' . $v . '_' . $language_id]) && is_numeric($products_data['video_nr_' . $v . '_' . $language_id])) {
         $check_query = xtc_db_query("SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);
       }
 
-      if (xtc_db_num_rows($check_query) > 0) {
+      if (isset($check_query) && xtc_db_num_rows($check_query) > 0) {
         if (empty($products_data['video_url_' . $v . '_' . $language_id]) && empty($products_data['video_source_id_' . $v . '_' . $language_id])) {
           if (isset($products_data['embedded_video_id_' . $v . '_' . $language_id]) && !empty($products_data['embedded_video_id_' . $v . '_' . $language_id])) {
             xtc_db_query("DELETE FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . $products_id . " AND embedded_video_id = " . $products_data['embedded_video_id_' . $v . '_' . $language_id] . " AND languages_id = " . $language_id . " AND video_nr = " . $products_data['video_nr_' . $v . '_' . $language_id]);

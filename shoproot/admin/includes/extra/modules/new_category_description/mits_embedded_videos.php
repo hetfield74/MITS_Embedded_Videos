@@ -23,7 +23,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       <div class="mits_embedded_videos">
         <?php
         $videos = mits_get_categories_videos($cInfo->categories_id, $languages[$i]['id']);
-        for ($v = 1, $c = $countVideoFields; $v < $c; $v++) {
+        for ($v = 1, $cv = $countVideoFields; $v < $cv; $v++) {
           ?>
           <div style="padding: 5px 0;">
             <table class="tableInput">
