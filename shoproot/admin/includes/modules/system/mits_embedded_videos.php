@@ -15,12 +15,12 @@
 defined('_VALID_XTC') or die('Direct Access to this location is not allowed.');
 
 class mits_embedded_videos {
-  var $code, $title, $description, $enabled;
+  var $code, $name, $version, $title, $description, $sort_order, $enabled, $_check;
 
   function __construct() {
     $this->code = 'mits_embedded_videos';
     $this->name = 'MODULE_' . strtoupper($this->code);
-    $this->version = '1.4.2';
+    $this->version = '1.4.4';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -58,8 +58,12 @@ class mits_embedded_videos {
 
   function check() {
     if (!isset($this->_check)) {
-      $check_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_STATUS'");
-      $this->_check = xtc_db_num_rows($check_query);
+      if (defined($this->name . '_STATUS')) {
+        $this->_check = true;
+      } else {
+        $check_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_STATUS'");
+        $this->_check = xtc_db_num_rows($check_query);
+      }
     }
     return $this->_check;
   }
@@ -101,5 +105,3 @@ class mits_embedded_videos {
   }
 
 }
-
-?>

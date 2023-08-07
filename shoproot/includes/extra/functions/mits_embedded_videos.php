@@ -35,6 +35,10 @@ function mits_get_vimeo_embedded_url($url) {
 }
 
 function mits_get_embedded_video($video_source, $video_source_id = '', $video_url = '', $video_title = '') {
+  global $product;
+
+  $poster = (isset($product->data['products_image'])) ? $product->productImage($product->data['products_image'], 'popup') : '';
+
   if (!empty($video_title)) {
     $video_title = '<div class="embedded_video_title">' . $video_title . '</div>';
   }
@@ -78,7 +82,7 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
       if (!strpos($video_url, '://')) $video_url = DIR_WS_BASE . $video_url;
       $video_code = '
       <div class="html5_video">
-        <video width="640" height="360" controls poster="">
+        <video width="640" height="360" controls poster="' . $poster . '">
           <source src="' . $video_url . '" type="video/mp4">
           <div class="errormessage">' . VIDEO_CANNOT_BE_PLAYED . ' <a href="' . $video_url . '">' . VIDEO_DOWNLOAD_LINK . '</a> abrufen.</div>
         </video>

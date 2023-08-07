@@ -23,12 +23,19 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         array('id' => 2, 'text' => MITS_EMBEDDED_VIDEOS_SOURCE_3),
   );
 
-  $video_position = array(
-        array('id' => 1, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT1),
-        array('id' => 2, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT2),
-        //array('id' => 3, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT3),
-        //array('id' => 4, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT4),
-  );
+  if (is_file(DIR_FS_ADMIN . 'includes/extra/modules/new_category_description/categories_description_2.php')) {
+    $video_position = array(
+          array('id' => 1, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT1),
+          array('id' => 2, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT2),
+          array('id' => 3, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT3),
+          array('id' => 4, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT4),
+    );
+  } else {
+    $video_position = array(
+      array('id' => 1, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT1),
+      array('id' => 2, 'text' => MITS_EMBEDDED_VIDEOS_POSITION_CAT2),
+    );
+  }
 
   ?>
   <style>

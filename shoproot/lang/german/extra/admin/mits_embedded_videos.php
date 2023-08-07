@@ -28,6 +28,8 @@ define('MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_DESC', 'Reihenfolg
 
 define('MITS_EMBEDDED_VIDEOS_POSITION_CAT1', 'Vor der Kategoriebeschreibung');
 define('MITS_EMBEDDED_VIDEOS_POSITION_CAT2', 'Nach der Kategoriebeschreibung');
+define('MITS_EMBEDDED_VIDEOS_POSITION_CAT3', 'Vor der 2. Kategoriebeschreibung');
+define('MITS_EMBEDDED_VIDEOS_POSITION_CAT4', 'Nach der 2. Kategoriebeschreibung');
 
 define('MITS_EMBEDDED_VIDEOS_SOURCE_1', 'YouTube');
 define('MITS_EMBEDDED_VIDEOS_SOURCE_2', 'Vimeo');

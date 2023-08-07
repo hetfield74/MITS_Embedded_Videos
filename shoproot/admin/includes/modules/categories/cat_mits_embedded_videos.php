@@ -13,11 +13,12 @@
  */
 
 class cat_mits_embedded_videos {
+  var $code, $name, $version, $title, $description, $sort_order, $enabled, $_check;
 
   function __construct() {
     $this->code = 'cat_mits_embedded_videos';
     $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-    $this->version = '1.4.2';
+    $this->version = '1.4.4';
     $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
     $this->description = constant($this->name . '_DESCRIPTION');
     $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -34,8 +35,12 @@ class cat_mits_embedded_videos {
 
   function check() {
     if (!isset($this->_check)) {
-      $check_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_STATUS'");
-      $this->_check = xtc_db_num_rows($check_query);
+      if (defined($this->name . '_STATUS')) {
+        $this->_check = true;
+      } else {
+        $check_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_STATUS'");
+        $this->_check = xtc_db_num_rows($check_query);
+      }
     }
     return $this->_check;
   }
@@ -73,9 +78,9 @@ class cat_mits_embedded_videos {
         'categories_id'    => (int)$categories_id,
         'languages_id'     => $language_id,
         'video_nr'         => isset($categories_data['video_nr_' . $v . '_' . $language_id]) && !empty($categories_data['video_nr_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_nr_' . $v . '_' . $language_id]) : '',
-        'video_source_id'  => isset($categories_data['video_source_id_' . $v . '_' . $language_id]) && !empty($categories_data['video_source_id_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_source_id_' . $v . '_' . $language_id]) : '',
+        'video_source_id'  => isset($categories_data['video_source_id_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_source_id_' . $v . '_' . $language_id]) : '',
         'video_source'     => isset($categories_data['video_source_' . $v . '_' . $language_id]) && !empty($categories_data['video_source_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_source_' . $v . '_' . $language_id]) : '',
-        'video_url'        => isset($categories_data['video_url_' . $v . '_' . $language_id]) && !empty($categories_data['video_url_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_url_' . $v . '_' . $language_id]) : '',
+        'video_url'        => isset($categories_data['video_url_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_url_' . $v . '_' . $language_id]) : '',
         'video_title'      => isset($categories_data['video_title_' . $v . '_' . $language_id]) && !empty($categories_data['video_title_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_title_' . $v . '_' . $language_id]) : '',
         'video_position'   => isset($categories_data['video_position_' . $v . '_' . $language_id]) && !empty($categories_data['video_position_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_position_' . $v . '_' . $language_id]) : '',
         'video_status'     => isset($categories_data['video_status_' . $v . '_' . $language_id]) && !empty($categories_data['video_status_' . $v . '_' . $language_id]) ? xtc_db_prepare_input($categories_data['video_status_' . $v . '_' . $language_id]) : '',
