@@ -17,7 +17,11 @@ define('MODULE_MITS_EMBEDDED_VIDEOS_DESCRIPTION', '
     <a href="https://www.merz-it-service.de/" target="_blank">
       <img src="' . xtc_href_link_admin(DIR_WS_IMAGES . 'merz-it-service.png') . '" border="0" alt="" style="display:block;max-width:100%;height:auto;" />
     </a><br />
-    <strong>Easy integration of YouTube and Vimeo Videos in products and categories.</strong><br /><br />
+    <p><strong>Easy integration of YouTube, vimeo or MP4 videos in products and categories.</strong></p>
+    <div style="text-align:center;">
+      <small>Only on Github is there always the latest version of the module!</small><br />
+      <a style="background:#6a9;color:#444" target="_blank" href="https://github.com/hetfield74/MITS_Embedded_Videos" class="button" onclick="this.blur();">MITS Embedded Videos on Github</a>
+    </div>
     <p>If you have any questions, problems or wishes for this module or other concerns about the modified eCommerce shopsoftware, simply contact us:</p> 
     <div style="text-align:center;"><a style="background:#6a9;color:#444" target="_blank" href="https://www.merz-it-service.de/Kontakt.html" class="button" onclick="this.blur();">Contact page on merz-it-service.de</strong></a></div>
 ');
