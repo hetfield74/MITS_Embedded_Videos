@@ -26,16 +26,17 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       $images_count = sizeof($more_images_data);
     }
     $videos_count = 0;
+    $video_string_before = $video_string_after = '';
     while ($products_videos = xtc_db_fetch_array($products_videos_query)) {
       if ($products_videos['video_position'] == 1) {
         $add_before_description = true;
         $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
-        $product->data['products_description'] = $video . $product->data['products_description'];
+        $video_string_before = $video . $video_string_before;
       }
       if ($products_videos['video_position'] == 2) {
         $add_after_description = true;
         $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
-        $product->data['products_description'] = $product->data['products_description'] . $video;
+        $video_string_after .= $video;
       }
       if ($products_videos['video_position'] == 3 && $products_videos['video_source'] != 2) {
         $add_more_images = true;
@@ -82,7 +83,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
       } elseif ($products_videos['video_position'] == 3 && $products_videos['video_source'] == 2) {
         $add_after_description = true;
         $video = mits_get_embedded_video($products_videos['video_source'], $products_videos['video_source_id'], $products_videos['video_url'], $products_videos['video_title']);
-        $product->data['products_description'] = $product->data['products_description'] . $video;
+        $video_string_after .= $video;
       }
     }
     if ($add_more_images === true) {
@@ -95,11 +96,11 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         $info_smarty->assign('more_images', $more_images_data);
       }
     }
-    if ($add_before_description === true) {
-      $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description']));
+    if (isset($video_string_before) && $add_before_description === true) {
+      $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($video_string_before . $product->data['products_description']));
     }
-    if ($add_after_description === true) {
-      $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description']));
+    if (isset($video_string_after) && $add_after_description === true) {
+      $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description'] . $video_string_after));
     }
   }
 }

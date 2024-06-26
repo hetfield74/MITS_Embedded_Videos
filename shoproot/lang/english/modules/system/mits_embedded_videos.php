@@ -15,7 +15,7 @@
 define('MODULE_MITS_EMBEDDED_VIDEOS_TITLE', 'MITS Embedded Videos <span style="white-space:nowrap;">&copy; by <span style="padding:2px;background:#ffe;color:#6a9;font-weight:bold;">Hetfield (MerZ IT-SerVice)</span></span>');
 define('MODULE_MITS_EMBEDDED_VIDEOS_DESCRIPTION', '
     <a href="https://www.merz-it-service.de/" target="_blank">
-      <img src="' . xtc_href_link_admin(DIR_WS_IMAGES . 'merz-it-service.png') . '" border="0" alt="" style="display:block;max-width:100%;height:auto;" />
+      <img src="' . (ENABLE_SSL === true ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG . DIR_WS_IMAGES . 'merz-it-service.png" border="0" alt="MerZ IT-SerVice" style="display:block;max-width:100%;height:auto;" />
     </a><br />
     <p><strong>Easy integration of YouTube, vimeo or MP4 videos in products and categories.</strong></p>
     <div style="text-align:center;">

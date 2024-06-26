@@ -66,22 +66,22 @@ Die Installation des Modul **MITS Embedded Videos** ist ziemlich einfach.
    und klicken sie dann auf der rechten Seite auf den Button Installieren. 
    Das Klassenerweiterungs-Modul wird nun komplett installiert.
        
-9. Für die Templates *tpl_modified* und *tpl_modified_responsive* sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern" keine Änderungen notwendig. Möchten Sie diese Option in anderen Templates nutzen, müssen Sie die Vorlagen für Artikeldetails entsprechend anpassen. Hier eine kleine Hilfe als Denkanstoß. Eventuell müssen aber auch noch Javascripte angepasst werden, dies ist je nach Template unterschiedlich. 
+   9. Für die Templates *tpl_modified* und *tpl_modified_responsive* sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern" keine Änderungen notwendig. Möchten Sie diese Option in anderen Templates nutzen, müssen Sie die Vorlagen für Artikeldetails entsprechend anpassen. Hier eine kleine Hilfe als Denkanstoß. Eventuell müssen aber auch noch Javascripte angepasst werden, dies ist je nach Template unterschiedlich. 
   
-       {if isset($videos) && count($videos) > 0} 
-         {foreach item=video_data from=$videos}
-           <div>
-             <a title="{$PRODUCTS_NAME|onlytext}" href="{$video_data.PRODUCTS_VIDEO}">
-               {if $smarty.const.PICTURESET_ACTIVE === true}
-                 <img class="lazyload" data-src="{$video_data.PRODUCTS_VIDEO_MIDI_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" />
-               {else}
-                 <img class="lazyload" data-src="{$video_data.PRODUCTS_VIDEO_THUMBNAIL_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" />
-               {/if}
-               <noscript><img src="{$video_data.PRODUCTS_VIDEO_THUMBNAIL_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" /></noscript>
-             </a>
-           </div>
-         {/foreach}
-       {/if}
+          {if isset($videos) && count($videos) > 0} 
+            {foreach item=video_data from=$videos}
+              <div>
+                <a title="{$PRODUCTS_NAME|onlytext}" href="{$video_data.PRODUCTS_VIDEO}">
+                  {if $smarty.const.PICTURESET_ACTIVE === true}
+                    <img class="lazyload" data-src="{$video_data.PRODUCTS_VIDEO_MIDI_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" />
+                  {else}
+                    <img class="lazyload" data-src="{$video_data.PRODUCTS_VIDEO_THUMBNAIL_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" />
+                  {/if}
+                  <noscript><img src="{$video_data.PRODUCTS_VIDEO_THUMBNAIL_IMAGE}" alt="{$PRODUCTS_NAME|onlytext}" title="{$PRODUCTS_NAME|onlytext}" /></noscript>
+                </a>
+              </div>
+            {/foreach}
+          {/if}
  
       Möglich ist auch folgende Variante, bei der direkt die Videos als eingebettetes Video (iframe) aufgelistet werden:
 
