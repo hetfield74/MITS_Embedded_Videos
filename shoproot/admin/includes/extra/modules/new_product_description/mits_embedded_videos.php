@@ -12,6 +12,8 @@
  * --------------------------------------------------------------
  */
 
+defined( '_VALID_XTC' ) or die( 'Direct Access to this location is not allowed.' );
+
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true') {
   ?>
   <div class="main" style="margin-top:10px;padding:3px;">

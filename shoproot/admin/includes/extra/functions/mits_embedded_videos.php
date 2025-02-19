@@ -12,6 +12,8 @@
  * --------------------------------------------------------------
  */
 
+defined( '_VALID_XTC' ) or die( 'Direct Access to this location is not allowed.' );
+
 if (defined('TABLE_MITS_EMBEDDED_VIDEOS')) {
   function mits_get_products_videos($products_id, $languages_id) {
     if (empty($products_id)) return false;

@@ -12,15 +12,15 @@
  * --------------------------------------------------------------
  */
 
-defined('VIDEO_CANNOT_BE_PLAYED') or define('VIDEO_CANNOT_BE_PLAYED', 'Your browser cannot reproduce this video. You can download it from the following link:');
-defined('VIDEO_DOWNLOAD_LINK') or define('VIDEO_DOWNLOAD_LINK', 'Download video');
+defined('VIDEO_CANNOT_BE_PLAYED') or define('VIDEO_CANNOT_BE_PLAYED', 'Votre navigateur ne peut pas reproduire cette vidéo. Vous pouvez le télécharger à partir du lien suivant:');
+defined('VIDEO_DOWNLOAD_LINK') or define('VIDEO_DOWNLOAD_LINK', 'Télécharger la video');
 defined('YOUTUBE_COOKIE_NOTICE') or define('YOUTUBE_COOKIE_NOTICE', '
-<div><strong>We need your consent</strong></div>
-<div>This content is provided by YouTube. You have to activate YouTube videos in the cookie settings. If you activate YouTube, personal data may be processed and cookies are set.</div>
+<div><strong>Nous avons besoin de votre consentement</strong></div>
+<div>Ce contenu est fourni par YouTube. Vous devez activer des vidéos YouTube dans les paramètres des cookies. Si vous activez YouTube, les données personnelles peuvent être traitées et les cookies sont définis.</div>
 <div><a class="cookie-consent-videobutton" href="javascript:;" trigger-cookie-consent-panel=""><i class="fa-solid fa-cookie"></i> ' . TEXT_COOKIE_CONSENT_LABEL_CPC_HEADING . '</a></div>
 ');
 defined('VIMEO_COOKIE_NOTICE') or define('VIMEO_COOKIE_NOTICE', '
-<div><strong>We need your consent</strong></div>
-<div>This content is provided by Vimeo. You have to activate Vimeo videos in the cookie settings. If you activate Vimeo, personal data may be processed and cookies are set.</div>
+<div><strong>Nous avons besoin de votre consentement</strong></div>
+<div>Ce contenu est fourni par Vimeo. Vous devez activer des vidéos Vimeo dans les paramètres des cookies. Si vous activez Vimeo, les données personnelles peuvent être traitées et les cookies sont définis.</div>
 <div><a class="cookie-consent-videobutton" href="javascript:;" trigger-cookie-consent-panel=""><i class="fa-solid fa-cookie"></i> ' . TEXT_COOKIE_CONSENT_LABEL_CPC_HEADING . '</a></div>
 ');
