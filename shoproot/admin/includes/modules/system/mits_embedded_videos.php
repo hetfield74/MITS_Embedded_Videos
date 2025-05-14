@@ -29,14 +29,13 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.4.8';
+        $this->version = '1.4.9';
         $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
         $this->description = constant($this->name . '_DESCRIPTION');
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
         $this->enabled = (defined($this->name . '_STATUS') && (constant($this->name . '_STATUS') == 'true') ? true : false);
 
-        $version_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_VERSION'");
-        if (xtc_db_num_rows($version_query)) {
+        if (defined($this->name . '_VERSION') && $this->version != constant($this->name . '_VERSION')) {
             $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'status'");
             if (xtc_db_num_rows($check_table_query) > 0) {
                 xtc_db_query(
@@ -48,10 +47,8 @@ class mits_embedded_videos
                 xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ADD `languages_id` INT(11) NOT NULL AFTER categories_id, ADD `video_title` TINYTEXT NULL AFTER video_url");
                 xtc_db_query("UPDATE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` SET `languages_id` = '2' WHERE `languages_id` = 0");
             }
-            if ($this->version != constant($this->name . '_VERSION')) {
-                xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
-            }
-        } elseif (defined($this->name . '_STATUS')) {
+            xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
+        } elseif (defined($this->name . '_STATUS') && !defined($this->name . '_VERSION')) {
             xtc_db_query(
               "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())"
             );
