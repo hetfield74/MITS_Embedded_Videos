@@ -29,7 +29,7 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.4.9';
+        $this->version = '1.4.10';
         $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
         $this->description = constant($this->name . '_DESCRIPTION');
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -110,6 +110,7 @@ class mits_embedded_videos
 					  `embedded_video_id` int(11) NOT NULL auto_increment,
 					  `products_id` int(11) NOT NULL default '0',
 					  `categories_id` int(11) NOT NULL default '0',
+					  `languages_id` int(11) NOT NULL,
 					  `video_nr` int(11) NOT NULL,
 					  `video_source_id` varchar(255) NULL,
 					  `video_source` int(1) NOT NULL default '0',

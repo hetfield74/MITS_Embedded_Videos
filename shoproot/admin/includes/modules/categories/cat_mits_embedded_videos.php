@@ -27,7 +27,7 @@ class cat_mits_embedded_videos
     {
         $this->code = 'cat_mits_embedded_videos';
         $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-        $this->version = '1.4.9';
+        $this->version = '1.4.10';
         $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
         $this->description = constant($this->name . '_DESCRIPTION');
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
