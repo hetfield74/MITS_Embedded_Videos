@@ -29,7 +29,7 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.4.10';
+        $this->version = '1.4.11';
         $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
         $this->description = constant($this->name . '_DESCRIPTION');
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
@@ -38,25 +38,23 @@ class mits_embedded_videos
         if (defined($this->name . '_VERSION') && $this->version != constant($this->name . '_VERSION')) {
             $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'status'");
             if (xtc_db_num_rows($check_table_query) > 0) {
-                xtc_db_query(
-                  "ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CHANGE `status` `video_status` TINYINT(1) NOT NULL DEFAULT '1', CHANGE `sorting` `video_sorting` TINYINT(1) NOT NULL DEFAULT '0'"
-                );
+                xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CHANGE `status` `video_status` TINYINT(1) NOT NULL DEFAULT '1', CHANGE `sorting` `video_sorting` TINYINT(1) NOT NULL DEFAULT '0'");
             }
             $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'languages_id'");
-            if (!xtc_db_num_rows($check_table_query)) {
-                xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ADD `languages_id` INT(11) NOT NULL AFTER categories_id, ADD `video_title` TINYTEXT NULL AFTER video_url");
+            if (xtc_db_num_rows($check_table_query) > 0) {
+                xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ADD `languages_id` INT(11) NOT NULL AFTER categories_id");
                 xtc_db_query("UPDATE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` SET `languages_id` = '2' WHERE `languages_id` = 0");
+            }
+            $check_table_query = xtc_db_query("SHOW COLUMNS FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " LIKE 'video_title'");
+            if (xtc_db_num_rows($check_table_query) > 0) {
+                xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ADD `video_title` TINYTEXT NULL AFTER video_url");
             }
             xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
         } elseif (defined($this->name . '_STATUS') && !defined($this->name . '_VERSION')) {
-            xtc_db_query(
-              "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())"
-            );
+            xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())");
         }
         if ($this->enabled !== false && !defined($this->name . '_TEMPLATE_CHANGED')) {
-            xtc_db_query(
-              "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())"
-            );
+            xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
         }
         if ($this->enabled !== false && !defined($this->name . '_YOUTUBE_IN_COOKIE_CONSENT')) {
             $this->install_video_cookie_consent();
@@ -93,18 +91,10 @@ class mits_embedded_videos
     {
         $this->install_video_cookie_consent();
 
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_STATUS', 'true', 6, 1, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_COUNT', '3', 6, 2, NULL, now());"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())"
-        );
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_STATUS', 'true', 6, 1, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_COUNT', '3', 6, 2, NULL, now());");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())");
         xtc_db_query(
           "CREATE TABLE IF NOT EXISTS " . TABLE_MITS_EMBEDDED_VIDEOS . " (
 					  `embedded_video_id` int(11) NOT NULL auto_increment,
@@ -115,6 +105,7 @@ class mits_embedded_videos
 					  `video_source_id` varchar(255) NULL,
 					  `video_source` int(1) NOT NULL default '0',
 					  `video_url` varchar(255) NULL,
+					  `video_title` tinytext NULL,
 					  `video_position` int(1) NOT NULL default '1',					  
 					  `video_status` tinyint(1) NOT NULL default '1',
 					  `video_sorting` tinyint(1) NOT NULL default '0',
@@ -223,18 +214,10 @@ class mits_embedded_videos
                 }
             }
         }
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_YOUTUBE_IN_COOKIE_CONSENT', '" . $youtube_in_cookie_consent . "', 6, 4, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_YOUTUBE_COOKIE_CONSENT_PURPOSEID', '" . $youtube_purpose_id . "', 6, 5, NULL, now());"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VIMEO_IN_COOKIE_CONSENT', '" . $vimeo_in_cookie_consent . "', 6, 6, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())"
-        );
-        xtc_db_query(
-          "INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VIMEO_COOKIE_CONSENT_PURPOSEID', '" . $vimeo_purpose_id . "', 6, 7, NULL, now());"
-        );
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_YOUTUBE_IN_COOKIE_CONSENT', '" . $youtube_in_cookie_consent . "', 6, 4, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_YOUTUBE_COOKIE_CONSENT_PURPOSEID', '" . $youtube_purpose_id . "', 6, 5, NULL, now());");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VIMEO_IN_COOKIE_CONSENT', '" . $vimeo_in_cookie_consent . "', 6, 6, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VIMEO_COOKIE_CONSENT_PURPOSEID', '" . $vimeo_purpose_id . "', 6, 7, NULL, now());");
     }
 
 }
