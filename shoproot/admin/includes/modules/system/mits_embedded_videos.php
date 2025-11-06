@@ -148,6 +148,11 @@ class mits_embedded_videos
     {
         $this->uninstall_video_cookie_consent();
 
+        xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key in ('" . implode("', '", $this->keys()) . "')");
+        xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key LIKE '" . $this->name . "_%'");
+
+        xtc_db_query("DROP TABLE " . TABLE_MITS_EMBEDDED_VIDEOS);
+
         $cat_modul_code = 'cat_mits_embedded_videos';
         if (defined('MODULE_CATEGORIES_' . strtoupper($cat_modul_code) . '_STATUS')) {
             $o_installed_array = explode(';', MODULE_CATEGORIES_INSTALLED);
@@ -161,10 +166,6 @@ class mits_embedded_videos
             xtc_redirect(xtc_href_link(FILENAME_MODULES, 'set=categories&module=' . $cat_modul_code . '&action=removeconfirm'));
         }
 
-        xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key in ('" . implode("', '", $this->keys()) . "')");
-        xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key LIKE '" . $this->name . "_%'");
-
-        xtc_db_query("DROP TABLE " . TABLE_MITS_EMBEDDED_VIDEOS);
     }
 
     /**
