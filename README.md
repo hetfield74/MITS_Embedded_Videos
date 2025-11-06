@@ -14,6 +14,7 @@ Funktionsübersicht:
 - Position der Videos wählbar (als zusätzliches Artikelbild, vor oder nach der Artikel- bzw. Kategoriebeschreibung)
 - YouTube-Videos werden mit der No-Cookie-Option eingebunden
 - Vimeo-Video werden mit der Option Do-Not-Track eingebunden
+- Dailymotion-Videos sind jetzt auch möglich
 - Eigene .mp4-Dateien integrierbar als HTML5-Video
 - Für die Templates *tpl_modified* und *tpl_modified_responsive* sind keine Änderungen notwendig.
 - Videos sind sprachabhängig hinterlegbar
@@ -66,7 +67,7 @@ Die Installation des Modul **MITS Embedded Videos** ist ziemlich einfach.
    und klicken sie dann auf der rechten Seite auf den Button Installieren. 
    Das Klassenerweiterungs-Modul wird nun komplett installiert.
        
-   9. Für die Templates *tpl_modified* und *tpl_modified_responsive* sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern" keine Änderungen notwendig. Möchten Sie diese Option in anderen Templates nutzen, müssen Sie die Vorlagen für Artikeldetails entsprechend anpassen. Hier eine kleine Hilfe als Denkanstoß. Eventuell müssen aber auch noch Javascripte angepasst werden, dies ist je nach Template unterschiedlich. 
+9. Für die Templates *tpl_modified* und *tpl_modified_responsive* sind für die Einstellung "Am Ende bei den zusätzlichen Artikelbildern" keine Änderungen notwendig. Möchten Sie diese Option in anderen Templates nutzen, müssen Sie die Vorlagen für Artikeldetails entsprechend anpassen. Hier eine kleine Hilfe als Denkanstoß. Eventuell müssen aber auch noch Javascripte angepasst werden, dies ist je nach Template unterschiedlich. 
   
           {if isset($videos) && count($videos) > 0} 
             {foreach item=video_data from=$videos}
@@ -93,7 +94,82 @@ Die Installation des Modul **MITS Embedded Videos** ist ziemlich einfach.
            {/foreach}
          {/if}
 
-10. Fertig!
+
+10. Für das Template *tpl_modified_nova* sind spezielle Anpassungen notwenig, da das im Template verwendete viewer.js keine Videos darstellen kann. Deshalb bringt das Modul ein eigenes Modal-Fenster mit. 
+    Es müssen aber dazu alle Artikeldetailvorlagen bearbeitet werden und im Modul muss *Angepasstes Template?* auf *ja* stehen. 
+    Suche dazu in den Artikelvorlagen unter *templates/tpl_modified_nova/module/product_info/* (in alle dort vorhandenen HTML-Dateien) nach folgendem Code:
+
+        {if isset($more_images) && count($more_images) > 0}
+          {foreach key=image_nr item=more_images_data from=$more_images name=more_images}
+            <div class="splide__slide">
+              <div class="pd_image_small"><div class="pd_image_small_inner">
+              {if $smarty.const.PICTURESET_ACTIVE === true}
+                <img class="lazyload" data-src="{$more_images_data.PRODUCTS_IMAGE|replace:"info_":"mini_"}" alt="{if isset($more_images_data.IMAGE_ALT) && $more_images_data.IMAGE_ALT != ''}{$more_images_data.IMAGE_ALT|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" title="{if isset($more_images_data.IMAGE_TITLE) && $more_images_data.IMAGE_TITLE != ''}{$more_images_data.IMAGE_TITLE|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" />
+              {else}
+                <img class="lazyload" data-src="{$more_images_data.PRODUCTS_IMAGE|replace:"info_":"thumbnail_"}" alt="{if isset($more_images_data.IMAGE_ALT) && $more_images_data.IMAGE_ALT != ''}{$more_images_data.IMAGE_ALT|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" title="{if isset($more_images_data.IMAGE_TITLE) && $more_images_data.IMAGE_TITLE != ''}{$more_images_data.IMAGE_TITLE|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" />
+              {/if}
+              </div></div>
+            </div>
+          {/foreach}
+        {/if}
+
+    Füge darunter diesen Abschnitt ein:
+
+        {if isset($videos) && count($videos) > 0}
+          {foreach item=video_data from=$videos}
+            <div class="splide__slide">
+              <div class="pd_image_small"><div class="pd_image_small_inner">
+                <a href="#" class="{$video_data.VIDEO_SOURCE} open-video" data-src="{$video_data.PRODUCTS_VIDEO}" data-title="{$video_data.PRODUCTS_VIDEO_TITLE|onlytext}">
+                  <img class="lazyload" {$video_data.VIDEO_CONSENT} data-src="{$video_data.PRODUCTS_VIDEO_THUMBNAIL_IMAGE}" alt="Video: {$PRODUCTS_NAME|onlytext}" title="{$video_data.PRODUCTS_VIDEO_TITLE|onlytext}" />
+                </a>
+              </div></div>
+            </div>
+          {/foreach}
+        {/if}
+
+    Suche weiter unten nach folgendem Code:
+
+        {if isset($more_images) && count($more_images) > 0}
+          {foreach key=image_nr item=more_images_data from=$more_images name=more_images}
+            <div class="splide__slide">
+              <picture>
+                <source media="(max-width:420px)" data-srcset="{$more_images_data.PRODUCTS_IMAGE|replace:"info_images":"thumbnail_images"}">
+                <source data-srcset="{$more_images_data.PRODUCTS_IMAGE}">
+                <img class="lazyload" data-original="{$more_images_data.PRODUCTS_IMAGE|replace:"info_":"popup_"}" data-src="{$more_images_data.PRODUCTS_IMAGE|replace:"info_":"mini_"}" alt="{if isset($more_images_data.IMAGE_ALT) && $more_images_data.IMAGE_ALT != ''}{$more_images_data.IMAGE_ALT|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" title="{if isset($more_images_data.IMAGE_TITLE) && $more_images_data.IMAGE_TITLE != ''}{$more_images_data.IMAGE_TITLE|onlytext}{else}{$PRODUCTS_NAME|onlytext}{/if}" />
+              </picture>
+            </div>
+          {/foreach}
+        {/if}
+
+    Füge darunter diesen Code ein:
+
+        {if isset($videos) && count($videos) > 0}
+          {foreach item=video_data from=$videos}
+            <div class="splide__slide">
+              {$video_data.PRODUCTS_VIDEO_EMBEDDED}
+            </div>
+          {/foreach}
+        {/if}
+
+11. Fertig!
+
+Wichtiger Hinweis zu YouTube-Videos in der Colorbox (bei *tpl_modified* und *tpl_modified_responsive*)!
+
+Beim Einbinden von YouTube-Videos über die jQuery Colorbox kann es zu dem Fehler
+„Video konnte nicht geladen werden (Fehler 153)“ kommen.
+
+Dieser Fehler tritt auf, weil YouTube das Abspielen von Videos in bestimmten eingebetteten Umgebungen einschränkt,
+insbesondere wenn das Video in einem sandboxed <iframe> oder in einer DOM-Umgebung mit Cross-Origin-Isolation geöffnet wird.
+Die Colorbox erzeugt intern ein eigenes <iframe>, um externe Inhalte anzuzeigen.
+Dabei werden Sicherheitsattribute gesetzt, die den YouTube-Player am Laden oder Initialisieren hindern.
+
+Technischer Hintergrund:
+
+- YouTube benötigt für seine Player-API uneingeschränkten Zugriff auf das <iframe> (z. B. allow-same-origin und Skriptsteuerung).
+- Die Colorbox trennt jedoch eingebettete Inhalte vom Haupt-Dokument, um Cross-Site-Scripting zu verhindern.
+- Dadurch kann YouTube das Video nicht korrekt initialisieren, was zu Fehler 153 führt.
+
+Empfehlung: Entweder in diesem Fall die Anzeige in den Beschreibungen bevorzugen oder die Lösung für das *tpl_modified_nova* in das entsprechende Template mit Anpassungen übernehmen. 
 
 <hr />
 

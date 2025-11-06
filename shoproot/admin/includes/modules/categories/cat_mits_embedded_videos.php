@@ -14,20 +14,20 @@
 
 class cat_mits_embedded_videos
 {
-    public $code;
-    public $name;
-    public $version;
-    public $title;
-    public $description;
-    public $sort_order;
-    public $enabled;
-    public $_check;
+    public string $code;
+    public string $name;
+    public string $version;
+    public string $title;
+    public mixed $description;
+    public mixed $sort_order;
+    public bool $enabled;
+    public bool $_check;
 
     function __construct()
     {
         $this->code = 'cat_mits_embedded_videos';
         $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-        $this->version = '1.4.11';
+        $this->version = '1.5.0';
         $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
         $this->description = constant($this->name . '_DESCRIPTION');
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;

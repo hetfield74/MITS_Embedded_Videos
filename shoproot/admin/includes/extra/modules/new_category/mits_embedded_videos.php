@@ -23,6 +23,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         array('id' => 0, 'text' => MITS_EMBEDDED_VIDEOS_SOURCE_1),
         array('id' => 1, 'text' => MITS_EMBEDDED_VIDEOS_SOURCE_2),
         array('id' => 2, 'text' => MITS_EMBEDDED_VIDEOS_SOURCE_3),
+        array('id' => 3, 'text' => MITS_EMBEDDED_VIDEOS_SOURCE_4),
   );
 
   if (is_file(DIR_FS_ADMIN . 'includes/extra/modules/new_category_description/categories_description_2.php')) {
