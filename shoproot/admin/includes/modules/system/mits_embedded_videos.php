@@ -33,7 +33,7 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.5.0';
+        $this->version = '1.5.1';
 
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
         $this->enabled = defined($this->name . '_STATUS') && (constant($this->name . '_STATUS') == 'true');
@@ -132,7 +132,7 @@ class mits_embedded_videos
         $this->install_video_cookie_consent();
 
         $cat_modul_code = 'cat_mits_embedded_videos';
-        if (!defined('MODULE_CATEGORIES_' . strtoupper($cat_modul_code))) {
+        if (!defined('MODULE_CATEGORIES_' . strtoupper($cat_modul_code) . '_STATUS')) {
             $installed_array = explode(';', MODULE_CATEGORIES_INSTALLED);
             $installed_array[] = $cat_modul_code . '.php';
             $installed_array = array_unique($installed_array);
@@ -149,8 +149,7 @@ class mits_embedded_videos
         $this->uninstall_video_cookie_consent();
 
         $cat_modul_code = 'cat_mits_embedded_videos';
-        $cat_modul_name = 'MODULE_CATEGORIES_' . strtoupper($cat_modul_code);
-        if (defined('MODULE_CATEGORIES_' . strtoupper($cat_modul_code))) {
+        if (defined('MODULE_CATEGORIES_' . strtoupper($cat_modul_code) . '_STATUS')) {
             $o_installed_array = explode(';', MODULE_CATEGORIES_INSTALLED);
             $installed_array = array();
             foreach ($o_installed_array as $value) {
@@ -159,7 +158,7 @@ class mits_embedded_videos
                 }
             }
             xtc_db_perform(TABLE_CONFIGURATION, array('configuration_value' => implode(';', $installed_array)), 'update', "`configuration_key` = 'MODULE_CATEGORIES_INSTALLED'");
-            xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key LIKE '" . $cat_modul_name . "_%'");
+            xtc_redirect(xtc_href_link(FILENAME_MODULES, 'set=categories&module=' . $cat_modul_code . '&action=removeconfirm'));
         }
 
         xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key in ('" . implode("', '", $this->keys()) . "')");
