@@ -101,11 +101,9 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
 
         if (isset($video_string_before) && $add_before_description === true) {
             $product->data['products_description'] = stripslashes($video_string_before . $product->data['products_description']);
-            $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($video_string_before . $product->data['products_description']));
         }
         if (isset($video_string_after) && $add_after_description === true) {
-            $product->data['products_description'] = stripslashes($video_string_after . $product->data['products_description']);
-            $info_smarty->assign('PRODUCTS_DESCRIPTION', stripslashes($product->data['products_description'] . $video_string_after));
+            $product->data['products_description'] = stripslashes($product->data['products_description'] . $video_string_after);
         }
         if (
           (isset($video_string_before) && $add_before_description === true)
