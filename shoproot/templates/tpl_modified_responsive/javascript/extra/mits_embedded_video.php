@@ -63,5 +63,8 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
   $("a.cbimages[href^='https://geo.dailymotion.com']").prop('class', 'dailymotion cboxElement');
   $("img[data-src^='https://geo.dailymotion.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
   $("img[src^='https://geo.dailymotion.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
+  $("a.cbimages[href$='.mp4']").prop('class', 'mp4-video cboxElement');
+  $("img[data-src$='.mp4']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
+  $("img[src$='.mp4']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
 </script>
 <?php } ?>

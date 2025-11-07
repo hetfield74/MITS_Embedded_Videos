@@ -66,6 +66,8 @@ function mits_get_video_image_thumb($id, $source)
         /*if (!mits_check_video_image_exists($thumb)) {
             $thumb = DIR_WS_BASE . DIR_WS_IMAGES . 'dailymotion_thumb.png';
         }*/
+    } elseif ($source == 'mp4') {
+        $thumb = DIR_WS_BASE . DIR_WS_IMAGES . 'mp4_thumb.png';
     }
     return $thumb;
 }
@@ -89,6 +91,8 @@ function mits_get_video_image_midi($id, $source)
         if (!mits_check_video_image_exists($midi)) {
             $midi = DIR_WS_BASE . DIR_WS_IMAGES . 'dailymotion_midi.png';
         }
+    } elseif ($source == 'mp4') {
+        $midi = DIR_WS_BASE . DIR_WS_IMAGES . 'mp4_midi.png';
     }
     return $midi;
 }

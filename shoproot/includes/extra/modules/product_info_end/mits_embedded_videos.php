@@ -37,7 +37,7 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
                 $add_after_description = true;
                 $video_string_after .= $video_embedded;
             }
-            if ($products_videos['video_position'] == 3 && $products_videos['video_source'] != 2) {
+            if ($products_videos['video_position'] == 3) {
                 $add_more_images = true;
                 $video_url = $video_source = '';
                 $video_title = $products_videos['video_title'];
@@ -54,6 +54,12 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
                 } elseif ($products_videos['video_source'] == 1 && !empty($products_videos['video_source_id'])) {
                     $video_url = 'https://player.vimeo.com/video/' . $products_videos['video_source_id'] . '?dnt=1&title=0&byline=0&portrait=0';
                     $video_source = 'vimeo';
+                } elseif ($products_videos['video_source'] == 2 && !empty($products_videos['video_url'])) {
+                    if (!strpos($products_videos['video_url'], '://')) {
+                        $products_videos['video_url'] = DIR_WS_BASE . $products_videos['video_url'];
+                    }
+                    $video_url = $products_videos['video_url'];
+                    $video_source = 'mp4';
                 } elseif ($products_videos['video_source'] == 3 && !empty($products_videos['video_url'])) {
                     $video_url = mits_get_dailymotion_embedded_url($products_videos['video_url']);
                     $video_source = 'dailymotion';
@@ -83,9 +89,6 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
                 }
                 $mo_img_nr++;
                 $images_count++;
-            } elseif ($products_videos['video_position'] == 3 && $products_videos['video_source'] == 2) {
-                $add_after_description = true;
-                $video_string_after .= $video_embedded;
             }
         }
         if ($add_more_images === true) {
