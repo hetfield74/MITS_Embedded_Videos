@@ -6,7 +6,8 @@
 
 <hr />
 
-Mit dieser nützlichen Erweiterungen für die modified eCommerce Shopsoftware kan man Videos für YouTube oder Vimeo in den Shop integrieren. Die Videos lassen sich ganz einfach bei Produkten und Kategorien einbinden.
+Mit dieser nützlichen Erweiterungen für die modified eCommerce Shopsoftware kan man Videos für YouTube, Vimeo, Dailymotion oder eigene MP4-Videos in den Shop integrieren. 
+Die Videos lassen sich ganz einfach bei Produkten und Kategorien einbinden.
 
 Funktionsübersicht:
 
