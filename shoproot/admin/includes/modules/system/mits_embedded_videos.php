@@ -226,7 +226,7 @@ class mits_embedded_videos
         }
 
         if (defined('DB_SERVER_ENGINE') && defined('DB_SERVER_CHARSET')) {
-            xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CONVERT TO CHARACTER SET " . DB_SERVER_CHARSET . " COLLATE" . DB_SERVER_CHARSET . "_general_ci");
+            xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` CONVERT TO CHARACTER SET " . DB_SERVER_CHARSET . " COLLATE " . DB_SERVER_CHARSET . "_general_ci");
             xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` ENGINE=" . DB_SERVER_ENGINE);
         }
 
