@@ -500,14 +500,21 @@ class mits_embedded_videos
           && defined($this->name . '_YOUTUBE_COOKIE_CONSENT_PURPOSEID')
           && constant($this->name . '_YOUTUBE_COOKIE_CONSENT_PURPOSEID') != ''
         ) {
-            xtc_db_query("DELETE FROM " . TABLE_COOKIE_CONSENT_COOKIES . " WHERE cookies_id = " . $this->name . "_YOUTUBE_COOKIE_CONSENT_PURPOSEID");
+            xtc_db_query("DELETE FROM " . TABLE_COOKIE_CONSENT_COOKIES . " WHERE cookies_id = " . constant($this->name . '_YOUTUBE_COOKIE_CONSENT_PURPOSEID'));
         }
 
         if (defined($this->name . '_VIMEO_IN_COOKIE_CONSENT')
           && defined($this->name . '_VIMEO_COOKIE_CONSENT_PURPOSEID')
           && constant($this->name . '_VIMEO_COOKIE_CONSENT_PURPOSEID') != ''
         ) {
-            xtc_db_query("DELETE FROM " . TABLE_COOKIE_CONSENT_COOKIES . " WHERE cookies_id = " . $this->name . "_VIMEO_COOKIE_CONSENT_PURPOSEID");
+            xtc_db_query("DELETE FROM " . TABLE_COOKIE_CONSENT_COOKIES . " WHERE cookies_id = " . constant($this->name . '_VIMEO_COOKIE_CONSENT_PURPOSEID'));
+        }
+
+        if (defined($this->name . '_DAILYMOTION_IN_COOKIE_CONSENT')
+          && defined($this->name . '_DAILYMOTION_COOKIE_CONSENT_PURPOSEID')
+          && constant($this->name . '_DAILYMOTION_COOKIE_CONSENT_PURPOSEID') != ''
+        ) {
+            xtc_db_query("DELETE FROM " . TABLE_COOKIE_CONSENT_COOKIES . " WHERE cookies_id = " . constant($this->name . '_DAILYMOTION_COOKIE_CONSENT_PURPOSEID'));
         }
     }
 
