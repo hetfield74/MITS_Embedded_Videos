@@ -42,7 +42,7 @@ $lang_array = array(
 
   'MITS_EMBEDDED_VIDEOS_POSITION_1' => 'Before the article description',
   'MITS_EMBEDDED_VIDEOS_POSITION_2' => 'After the article description',
-  'MITS_EMBEDDED_VIDEOS_POSITION_3' => 'At the end of the additional article images (only YouTube/Vimeo/Dailymotion)',
+  'MITS_EMBEDDED_VIDEOS_POSITION_3' => 'At the end of the additional article images',
   'MITS_EMBEDDED_VIDEOS_POSITION_4' => 'As an additional tab (adjusted template required!)',
 
   'MITS_EMBEDDED_VIDEOS_HEADING'             => 'MITS Embedded Videos <span style="white-space:nowrap;">&copy; by <span style="padding:2px;background:#ffe;color:#6a9;font-weight:bold;">Hetfield (MerZ IT-SerVice)</span></span>',

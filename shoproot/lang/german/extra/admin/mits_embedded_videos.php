@@ -43,7 +43,7 @@ $lang_array = array(
 
   'MITS_EMBEDDED_VIDEOS_POSITION_1' => 'Vor der Artikelbeschreibung',
   'MITS_EMBEDDED_VIDEOS_POSITION_2' => 'Nach der Artikelbeschreibung',
-  'MITS_EMBEDDED_VIDEOS_POSITION_3' => 'Am Ende bei den zus&auml;tzlichen Artikelbildern (nur YouTube/Vimeo/Dailymotion)',
+  'MITS_EMBEDDED_VIDEOS_POSITION_3' => 'Am Ende bei den zus&auml;tzlichen Artikelbildern',
   'MITS_EMBEDDED_VIDEOS_POSITION_4' => 'Als zus&auml;tzlicher Tab (angepasstes Template erforderlich!)',
 
   'MITS_EMBEDDED_VIDEOS_HEADING'             => 'MITS Embedded Videos <span style="white-space:nowrap;">&copy; by <span style="padding:2px;background:#ffe;color:#6a9;font-weight:bold;">Hetfield (MerZ IT-SerVice)</span></span>',

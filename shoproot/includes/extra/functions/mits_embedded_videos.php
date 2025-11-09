@@ -145,7 +145,7 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
           && defined('YOUTUBE_COOKIE_NOTICE')
           && (in_array(MODULE_MITS_EMBEDDED_VIDEOS_YOUTUBE_COOKIE_CONSENT_PURPOSEID, $_SESSION['tracking']['allowed']) || defined('COOKIE_CONSENT_NO_TRACKING'))) {
             $youtube_oil = 'data-managed="as-oil" data-title="' . $video_title . '" data-purposes="' . MODULE_MITS_EMBEDDED_VIDEOS_YOUTUBE_COOKIE_CONSENT_PURPOSEID . '" data-';
-            $youtube_cookie_notice = '<div class="videoframe_cookienotice" data-nosnippet><div class="videoframe_cookienotice_inner">' . YOUTUBE_COOKIE_NOTICE . '</div></div>';
+            $youtube_cookie_notice = '<div class="videoframe_cookienotice youtubecookie" data-nosnippet><div class="videoframe_cookienotice_inner">' . YOUTUBE_COOKIE_NOTICE . '</div></div>';
         }
         if (defined('MODULE_MITS_EMBEDDED_VIDEOS_VIMEO_IN_COOKIE_CONSENT')
           && MODULE_MITS_EMBEDDED_VIDEOS_VIMEO_IN_COOKIE_CONSENT == 'true'
@@ -154,7 +154,7 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
           && (in_array(MODULE_MITS_EMBEDDED_VIDEOS_VIMEO_COOKIE_CONSENT_PURPOSEID, $_SESSION['tracking']['allowed']) || defined('COOKIE_CONSENT_NO_TRACKING'))) {
             $vimeo_oil = 'data-managed="as-oil" data-title="' . $video_title . '" data-purposes="' . MODULE_MITS_EMBEDDED_VIDEOS_VIMEO_COOKIE_CONSENT_PURPOSEID . '" data-';
             $vimeo_oil_script = ' async data-type="text/javascript" type="as-oil" data-purposes="' . MODULE_MITS_EMBEDDED_VIDEOS_VIMEO_COOKIE_CONSENT_PURPOSEID . '" data-managed="as-oil" data-';
-            $vimeo_cookie_notice = '<div class="videoframe_cookienotice" data-nosnippet><div class="videoframe_cookienotice_inner">' . VIMEO_COOKIE_NOTICE . '</div></div>';
+            $vimeo_cookie_notice = '<div class="videoframe_cookienotice vimeocookie" data-nosnippet><div class="videoframe_cookienotice_inner">' . VIMEO_COOKIE_NOTICE . '</div></div>';
         }
         if (defined('MODULE_MITS_EMBEDDED_VIDEOS_DAILYMOTION_IN_COOKIE_CONSENT')
           && MODULE_MITS_EMBEDDED_VIDEOS_DAILYMOTION_IN_COOKIE_CONSENT == 'true'
@@ -162,7 +162,7 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
           && defined('DAILYMOTION_COOKIE_NOTICE')
           && (in_array(MODULE_MITS_EMBEDDED_VIDEOS_DAILYMOTION_COOKIE_CONSENT_PURPOSEID, $_SESSION['tracking']['allowed']) || defined('COOKIE_CONSENT_NO_TRACKING'))) {
             $dailymotion_oil = 'data-managed="as-oil" data-title="' . $video_title . '" data-purposes="' . MODULE_MITS_EMBEDDED_VIDEOS_DAILYMOTION_COOKIE_CONSENT_PURPOSEID . '" data-';
-            $dailymotion_cookie_notice = '<div class="videoframe_cookienotice" data-nosnippet><div class="videoframe_cookienotice_inner">' . DAILYMOTION_COOKIE_NOTICE . '</div></div>';
+            $dailymotion_cookie_notice = '<div class="videoframe_cookienotice dailymotioncookie" data-nosnippet><div class="videoframe_cookienotice_inner">' . DAILYMOTION_COOKIE_NOTICE . '</div></div>';
         }
     }
 

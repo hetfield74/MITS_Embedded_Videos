@@ -13,60 +13,77 @@
  */
 
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true') {
-  if (!is_file('templates/' . CURRENT_TEMPLATE . '/javascript/extra/colorbox.js.php') && strstr(CURRENT_TEMPLATE, 'tpl_modified')) {
-    ?>
-    <style>.html5_video video{width:100%;height:auto}.embedded_video{position:relative;height:0;padding-bottom:56.25%;margin:10px auto;clear:both;}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}.embedded_video .video-wall{width:100% !important;}.embedded_video_title{margin:-10px auto 10px auto;background:#f1f1f1;padding:4px 6px;font-size:11px}</style>
-    <script>
-      $(".youtube, .vimeo, .dailymotion").colorbox({
-        iframe: true,
-        width: "90%",
-        height: "90%",
-        maxWidth: "90%",
-        maxHeight: "90%",
-        fixed: true,
-        close: '<i class="fas fa-times"></i>',
-        onComplete: function () {
-          const iframe = $('#cboxLoadedContent').find('iframe');
-          const src = iframe.attr('src') || '';
+    if (!is_file('templates/' . CURRENT_TEMPLATE . '/javascript/extra/colorbox.js.php') && strstr(CURRENT_TEMPLATE, 'tpl_modified')) {
+        ?>
+        <style>.html5_video video{width:100%;height:auto}.embedded_video{position:relative;height:0;padding-bottom:56.25%;margin:10px auto;clear:both;}.videoframe{position:absolute;top:0;left:0;width:100%;height:100%}.embedded_video .video-wall{width:100% !important;}.embedded_video_title{margin:-10px auto 10px auto;background:#f1f1f1;padding:4px 6px;font-size:11px}</style>
+        <script>
+          $(".youtube, .vimeo, .dailymotion").colorbox({
+            iframe: true,
+            width: "90%",
+            height: "90%",
+            maxWidth: "90%",
+            maxHeight: "90%",
+            fixed: true,
+            close: '<i class="fas fa-times"></i>',
+            onComplete: function () {
+              const iframe = $('#cboxLoadedContent').find('iframe');
+              const src = iframe.attr('src') || '';
 
-          iframe.attr({
-            referrerpolicy: 'strict-origin-when-cross-origin',
-            frameborder: 0
-          });
+              iframe.attr({
+                referrerpolicy: 'strict-origin-when-cross-origin',
+                frameborder: 0
+              });
 
-          if (src.includes('youtube')) {
-            iframe.attr('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-          }
-          else if (src.includes('vimeo')) {
-            iframe.attr('allow', 'autoplay; fullscreen; picture-in-picture');
-            iframe.attr('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
-          }
-          else if (src.includes('dailymotion')) {
-              iframe.attr('allow', 'autoplay; fullscreen; web-share');
-              iframe.attr('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
+              if (src.includes('youtube')) {
+                iframe.attr('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+              }
+              else if (src.includes('vimeo')) {
+                iframe.attr('allow', 'autoplay; fullscreen; picture-in-picture');
+                iframe.attr('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
+              }
+              else if (src.includes('dailymotion')) {
+                  iframe.attr('allow', 'autoplay; fullscreen; web-share');
+                  iframe.attr('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
+                }
+
+              iframe.css({
+                width: '100%',
+                height: '100%',
+                background: '#000'
+              });
             }
-
-          iframe.css({
-            width: '100%',
-            height: '100%',
-            background: '#000'
           });
-        }
-      });
-      });
-      $("a.cbimages[href^='https://www.youtube-nocookie.com']").prop('class', 'youtube cboxElement');
-      $("img[data-src^='https://www.youtube-nocookie.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'youtube_thumb.png');?>');
-      $("img[src^='https://www.youtube-nocookie.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'youtube_thumb.png');?>');
-      $("a.cbimages[href^='https://player.vimeo.com']").prop('class', 'vimeo cboxElement');
-      $("img[data-src^='https://player.vimeo.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'vimeo_thumb.png');?>');
-      $("img[src^='https://player.vimeo.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'vimeo_thumb.png');?>');
-      $("a.cbimages[href^='https://geo.dailymotion.com']").prop('class', 'dailymotion cboxElement');
-      $("img[data-src^='https://geo.dailymotion.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
-      $("img[src^='https://geo.dailymotion.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
-      $("a.cbimages[href$='.mp4']").prop('class', 'mp4-video cboxElement');
-      $("img[data-src$='.mp4']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
-      $("img[src$='.mp4']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
-    </script>
+          });
+          $("a.cbimages[href^='https://www.youtube-nocookie.com']").prop('class', 'youtube cboxElement');
+          $("img[data-src^='https://www.youtube-nocookie.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'youtube_thumb.png');?>');
+          $("img[src^='https://www.youtube-nocookie.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'youtube_thumb.png');?>');
+          $("a.cbimages[href^='https://player.vimeo.com']").prop('class', 'vimeo cboxElement');
+          $("img[data-src^='https://player.vimeo.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'vimeo_thumb.png');?>');
+          $("img[src^='https://player.vimeo.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'vimeo_thumb.png');?>');
+          $("a.cbimages[href^='https://geo.dailymotion.com']").prop('class', 'dailymotion cboxElement');
+          $("img[data-src^='https://geo.dailymotion.com']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
+          $("img[src^='https://geo.dailymotion.com']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'dailymotion_thumb.png');?>');
+          $("a.cbimages[href$='.mp4']").prop('class', 'mp4-video cboxElement');
+          $("img[data-src$='.mp4']").attr('data-src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
+          $("img[src$='.mp4']").attr('src', '<?php echo xtc_href_link(DIR_WS_IMAGES . 'mp4_thumb.png');?>');
+        </script>
+        <?php
+    }
+    ?>
+  <script async data-type="text/javascript" type="as-oil" <?php echo mits_get_video_consent('youtube');?>>
+    $(document).ready(function () {
+      $(".videoframe_cookienotice.youtubecookie").remove();
+    });
+  </script>
+  <script async data-type="text/javascript" type="as-oil" <?php echo mits_get_video_consent('vimeo');?>>
+    $(document).ready(function () {
+      $(".videoframe_cookienotice.vimeocookie").remove();
+    });
+  </script>
+  <script async data-type="text/javascript" type="as-oil" <?php echo mits_get_video_consent('dailymotion');?>>
+    $(document).ready(function () {
+      $(".videoframe_cookienotice.dailymotioncookie").remove();
+    });
+  </script>
     <?php
-  }
 }
