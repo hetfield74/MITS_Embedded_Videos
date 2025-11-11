@@ -33,7 +33,7 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.5.3';
+        $this->version = '1.5.5';
 
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
         $this->enabled = defined($this->name . '_STATUS') && (constant($this->name . '_STATUS') == 'true');
@@ -105,6 +105,7 @@ class mits_embedded_videos
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_STATUS', 'true', 6, 1, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_COUNT', '3', 6, 2, NULL, now());");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_REPLACE_IFRAMES', 'true', 6, 4, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())");
         xtc_db_query(
           "CREATE TABLE IF NOT EXISTS " . TABLE_MITS_EMBEDDED_VIDEOS . " (
@@ -198,6 +199,10 @@ class mits_embedded_videos
             xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_TEMPLATE_CHANGED', 'false', 6, 3, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
         }
 
+        if (!defined($this->name . '_REPLACE_IFRAMES')) {
+            xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_REPLACE_IFRAMES', 'true', 6, 4, 'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
+        }
+
         xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` MODIFY embedded_video_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT");
         xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` MODIFY products_id INT(11) UNSIGNED NOT NULL DEFAULT 0");
         xtc_db_query("ALTER TABLE `" . TABLE_MITS_EMBEDDED_VIDEOS . "` MODIFY categories_id INT(11) UNSIGNED NOT NULL DEFAULT 0");
@@ -287,6 +292,7 @@ class mits_embedded_videos
           $this->name . '_STATUS',
           $this->name . '_COUNT',
           $this->name . '_TEMPLATE_CHANGED',
+          $this->name . '_REPLACE_IFRAMES',
           $this->name . '_YOUTUBE_IN_COOKIE_CONSENT',
           $this->name . '_YOUTUBE_COOKIE_CONSENT_PURPOSEID',
           $this->name . '_VIMEO_IN_COOKIE_CONSENT',

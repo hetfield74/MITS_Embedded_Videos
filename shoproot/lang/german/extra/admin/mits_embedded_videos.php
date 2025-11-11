@@ -31,6 +31,15 @@ $lang_array = array(
   'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_TITLE' => 'Sortierreihenfolge',
   'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_DESC'  => 'Reihenfolge der Verarbeitung. Kleinste Ziffer wird zuerst ausgeführt.',
 
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_AVAILABLE_TITLE' => ' <span style="font-weight:bold;color:#900;background:#ff6;padding:2px;border:1px solid #900;">Bitte Modulaktualisierung durchf&uuml;hren!</span>',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_AVAILABLE_DESC'  => '',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_FINISHED'        => 'Das Modul MITS Embedded Videos wurde aktualisiert.',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_ERROR'           => 'Fehler',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_MODUL'           => 'Modul aktualisieren',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_DELETE_MODUL'           => 'MITS Embedded Videos komplett vom Server entfernen',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_CONFIRM_DELETE_MODUL'   => 'M&ouml;chten sie das Modul MITS Embedded Videos mit allen Dateien wirklich vom Server l&ouml;schen?',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_DELETE_FINISHED'        => 'Das Modul MITS Embedded Videos wurde vom Server gel&ouml;scht.',
+
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT1' => 'Vor der Kategoriebeschreibung',
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT2' => 'Nach der Kategoriebeschreibung',
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT3' => 'Vor der 2. Kategoriebeschreibung',

@@ -13,6 +13,9 @@
  */
 
 if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true') {
+    if (function_exists('fix_embedded_videos')) {
+        $product->data['products_description'] = fix_embedded_videos($product->data['products_description']);
+    }
     $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE products_id = " . (int)$product->data['products_id'] . " AND languages_id = " . (int)$_SESSION['languages_id'] . " ORDER BY video_nr DESC";
     $products_videos_query = xtc_db_query($videos_query);
     if (xtc_db_num_rows($products_videos_query) > 0) {
@@ -108,11 +111,14 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
         if (isset($video_string_after) && $add_after_description === true) {
             $product->data['products_description'] = stripslashes($product->data['products_description'] . $video_string_after);
         }
-        if (
+        if (!function_exists('fix_embedded_videos') &&
           (isset($video_string_before) && $add_before_description === true)
           || (isset($video_string_after) && $add_after_description === true)
         ) {
             $info_smarty->assign('PRODUCTS_DESCRIPTION', $product->data['products_description']);
         }
+    }
+    if (function_exists('fix_embedded_videos')) {
+        $info_smarty->assign('PRODUCTS_DESCRIPTION', $product->data['products_description']);
     }
 }

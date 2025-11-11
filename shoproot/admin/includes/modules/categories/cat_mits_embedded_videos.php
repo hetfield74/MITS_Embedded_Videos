@@ -17,34 +17,49 @@ class cat_mits_embedded_videos
     public string $code;
     public string $name;
     public string $version;
-    public string $title;
-    public mixed $description;
     public mixed $sort_order;
+    public string $title;
+    public string $description;
+    public mixed $do_update;
     public bool $enabled;
-    public bool $_check;
+    private bool $_check;
 
     function __construct()
     {
         $this->code = 'cat_mits_embedded_videos';
         $this->name = 'MODULE_CATEGORIES_' . strtoupper($this->code);
-        $this->version = '1.5.3';
-        $this->title = constant($this->name . '_TITLE') . ' - v' . $this->version;
-        $this->description = constant($this->name . '_DESCRIPTION');
+        $this->version = '1.5.5';
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
         $this->enabled = defined($this->name . '_STATUS') && (constant($this->name . '_STATUS') == 'true');
 
         if (defined($this->name . '_VERSION') && $this->version != constant($this->name . '_VERSION')) {
-            xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
-        } elseif (defined($this->name . '_STATUS') && !defined($this->name . '_VERSION')) {
-            xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_VERSION', '" . $this->version . "', 6, 99, NULL, now())");
+            $this->do_update = (defined($this->name . '_UPDATE_AVAILABLE_TITLE')) ? constant($this->name . '_UPDATE_AVAILABLE_TITLE') : '';
+        } else {
+            $this->do_update = '';
         }
+
+        $this->title = (defined($this->name . '_TITLE') ? constant($this->name . '_TITLE') : $this->code) . ' - v' . $this->version . $this->do_update;
+        $this->description = '';
+        if ($this->do_update != '') {
+            $this->description .= '<a class="button btnbox but_green" style="text-align:center;" onclick="this.blur();" href="' . xtc_href_link(FILENAME_MODULE_EXPORT, 'set=system&module=mits_embedded_videos&action=update') . '">' . constant($this->name . '_UPDATE_MODUL') . '</a><br>';
+        }
+        $this->description .= defined($this->name . '_DESCRIPTION') ? constant($this->name . '_DESCRIPTION') . '<hr style="margin:10px 0">' : '';
+
+        /*if (!$this->enabled) {
+            $this->description .= '<div style="text-align:center;margin:30px 0"><a class="button but_red" style="text-align:center;" onclick="return confirmLink(\'' . constant($this->name . '_CONFIRM_DELETE_MODUL') . '\', \'\' ,this);" href="' . xtc_href_link(FILENAME_MODULE_EXPORT, 'set=system&module=mits_embedded_videos&action=custom') . '">' . constant(
+                $this->name . '_DELETE_MODUL'
+              ) . '</a></div><br>';
+        }*/
     }
 
 
-    function check()
+    /**
+     * @return true
+     */
+    public function check(): bool
     {
         if (!isset($this->_check)) {
-            if (defined($this->name . '_STATUS')) {
+            if (defined($this->name . '_STATUS') && !defined('RUN_MODE_ADMIN')) {
                 $this->_check = true;
             } else {
                 $check_query = xtc_db_query("SELECT configuration_value FROM " . TABLE_CONFIGURATION . " WHERE configuration_key = '" . $this->name . "_STATUS'");
@@ -54,17 +69,28 @@ class cat_mits_embedded_videos
         return $this->_check;
     }
 
-
-    function keys()
+    /**
+     * @return string[]
+     */
+    public function keys(): array
     {
-        return array(
+        defined($this->name . '_STATUS_TITLE') || define($this->name . '_STATUS_TITLE', TEXT_DEFAULT_STATUS_TITLE);
+        defined($this->name . '_STATUS_DESC') || define($this->name . '_STATUS_DESC', TEXT_DEFAULT_STATUS_DESC);
+        defined($this->name . '_SORT_ORDER_TITLE') || define($this->name . '_SORT_ORDER_TITLE', TEXT_DEFAULT_SORT_ORDER_TITLE);
+        defined($this->name . '_SORT_ORDER_DESC') || define($this->name . '_SORT_ORDER_DESC', TEXT_DEFAULT_SORT_ORDER_DESC);
+
+        $key = array(
           $this->name . '_STATUS',
-          $this->name . '_SORT_ORDER'
+          $this->name . '_SORT_ORDER',
         );
+
+        return $key;
     }
 
-
-    function install()
+    /**
+     * @return void
+     */
+    public function install(): void
     {
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, set_function, date_added) VALUES ('" . $this->name . "_STATUS', 'true', 6, 1,'xtc_cfg_select_option(array(\'true\', \'false\'), ', now())");
         xtc_db_query("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, sort_order, date_added) VALUES ('" . $this->name . "_SORT_ORDER', '10', 6, 2, now())");
@@ -72,13 +98,23 @@ class cat_mits_embedded_videos
     }
 
 
-    function remove()
+    /**
+     * @return void
+     */
+    public function remove(): void
     {
         xtc_db_query("DELETE FROM " . TABLE_CONFIGURATION . " WHERE configuration_key LIKE '" . $this->name . "_%'");
     }
 
 
-    function insert_category_desc($sql_data_array, $categories_data, $categories_id, $language_id)
+    /**
+     * @param $sql_data_array
+     * @param $categories_data
+     * @param $categories_id
+     * @param $language_id
+     * @return mixed
+     */
+    public function insert_category_desc($sql_data_array, $categories_data, $categories_id, $language_id): mixed
     {
         defined('MODULE_MITS_EMBEDDED_VIDEOS_COUNT') or define('MODULE_MITS_EMBEDDED_VIDEOS_COUNT', 3);
         $countVideoFields = (int)MODULE_MITS_EMBEDDED_VIDEOS_COUNT + 1;
@@ -138,7 +174,14 @@ class cat_mits_embedded_videos
     }
 
 
-    function insert_product_desc($sql_data_array, $products_data, $products_id, $language_id)
+    /**
+     * @param $sql_data_array
+     * @param $products_data
+     * @param $products_id
+     * @param $language_id
+     * @return mixed
+     */
+    public function insert_product_desc($sql_data_array, $products_data, $products_id, $language_id): mixed
     {
         defined('MODULE_MITS_EMBEDDED_VIDEOS_COUNT') or define('MODULE_MITS_EMBEDDED_VIDEOS_COUNT', 3);
         $countVideoFields = (int)MODULE_MITS_EMBEDDED_VIDEOS_COUNT + 1;

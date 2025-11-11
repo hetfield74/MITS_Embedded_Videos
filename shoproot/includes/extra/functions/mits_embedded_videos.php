@@ -247,3 +247,112 @@ function mits_get_embedded_video($video_source, $video_source_id = '', $video_ur
 
     return $video_code . $video_title;
 }
+
+function fix_embedded_videos($html)
+{
+    if (trim($html) === '') return $html;
+
+    $encoding = isset($_SESSION['language_charset']) ? strtolower($_SESSION['language_charset']) : 'utf-8';
+    if ($encoding !== 'utf-8') {
+        $html = mb_convert_encoding($html, 'HTML-ENTITIES', $encoding);
+    }
+
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    libxml_use_internal_errors(true);
+    $dom->loadHTML('<?xml encoding="utf-8" ?><div id="mits_wrapper">'.$html.'</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+
+    $iframes = $dom->getElementsByTagName('iframe');
+
+    foreach ($iframes as $iframe) {
+        $src = $iframe->getAttribute('src');
+        $src_lower = strtolower($src);
+
+        $isYoutube     = (strpos($src_lower, 'youtube.com') !== false || strpos($src_lower, 'youtu.be') !== false || strpos($src_lower, 'youtube-nocookie.com') !== false);
+        $isVimeo       = (strpos($src_lower, 'vimeo.com') !== false);
+        $isDailymotion = (strpos($src_lower, 'dailymotion.com') !== false);
+        $isMp4         = (preg_match('/\.mp4(\?|$)/i', $src) === 1);
+        if (!($isYoutube || $isVimeo || $isDailymotion || $isMp4)) continue;
+
+        $video_source = $isYoutube ? 'youtube' : ($isVimeo ? 'vimeo' : ($isDailymotion ? 'dailymotion' : 'mp4'));
+
+        if ($isYoutube && strpos($src_lower, 'youtube-nocookie.com') === false) {
+            if (preg_match('~https?://(?:www\.)?youtu\.be/([^?\s/]+)~i', $src, $m)) {
+                $src = 'https://www.youtube-nocookie.com/embed/' . $m[1];
+            } else {
+                $src = str_ireplace(['youtube.com', 'youtu.be'], 'youtube-nocookie.com', $src);
+            }
+            $iframe->setAttribute('src', $src);
+        }
+        if ($isVimeo && stripos($src, 'dnt=1') === false) {
+            $src .= (strpos($src, '?') !== false ? '&' : '?') . 'dnt=1';
+            $iframe->setAttribute('src', $src);
+        }
+
+        if (function_exists('mits_get_video_consent')) {
+            $hasAsOil = (strtolower($iframe->getAttribute('data-managed')) === 'as-oil');
+            if (!$hasAsOil) {
+                $oil = trim((string) mits_get_video_consent($video_source));
+                if ($oil !== '') {
+                    if (preg_match_all('/(\w[\w\-]*)\s*=\s*"([^"]*)"/', $oil, $am, PREG_SET_ORDER)) {
+                        foreach ($am as $attr) {
+                            $iframe->setAttribute($attr[1], $attr[2]);
+                        }
+                    }
+                }
+            }
+        }
+
+        $cls = $iframe->getAttribute('class');
+        if ($cls === '' || stripos($cls, 'videoframe') === false) {
+            $iframe->setAttribute('class', trim($cls.' videoframe'));
+        }
+        if (!$iframe->hasAttribute('referrerpolicy')) {
+            $iframe->setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        }
+
+        $parent = $iframe->parentNode;
+        $wrapper = $parent;
+        $isWrapper = false;
+        if ($parent instanceof DOMElement && $parent->tagName === 'div' &&
+          preg_match('/\bembedded_video\b/i', $parent->getAttribute('class'))) {
+            $isWrapper = true;
+        }
+        if (!$isWrapper) {
+            $wrapper = $dom->createElement('div');
+            $wrapper->setAttribute('class', 'embedded_video');
+            $parent->replaceChild($wrapper, $iframe);
+            $wrapper->appendChild($iframe);
+        }
+    }
+
+    $wrapNode = $dom->getElementById('mits_wrapper');
+    $output = '';
+    if ($wrapNode) {
+        foreach ($wrapNode->childNodes as $node) {
+            $output .= $dom->saveHTML($node);
+        }
+    }
+
+    $output = preg_replace_callback(
+      '/(<div[^>]*class="[^"]*embedded_video[^"]*"[^>]*>)(.*?<\/iframe>)(?!.*videoframe_cookienotice)(<\/div>)/is',
+      function ($m) {
+          $inner = $m[2];
+          $notice = '';
+          if (strpos($inner, 'youtube-nocookie.com') !== false) {
+              $text = defined('YOUTUBE_COOKIE_NOTICE') ? YOUTUBE_COOKIE_NOTICE : 'YouTube Cookies m&uuml;ssen akzeptiert werden.';
+              $notice = '<div class="videoframe_cookienotice youtubecookie" data-nosnippet><div class="videoframe_cookienotice_inner">'.$text.'</div></div>';
+          } elseif (strpos($inner, 'vimeo.com') !== false) {
+              $text = defined('VIMEO_COOKIE_NOTICE') ? VIMEO_COOKIE_NOTICE : 'Vimeo Cookies m&uuml;ssen akzeptiert werden.';
+              $notice = '<div class="videoframe_cookienotice vimeocookie" data-nosnippet><div class="videoframe_cookienotice_inner">'.$text.'</div></div>';
+          } elseif (strpos($inner, 'dailymotion.com') !== false) {
+              $text = defined('DAILYMOTION_COOKIE_NOTICE') ? DAILYMOTION_COOKIE_NOTICE : 'Dailymotion Cookies m&uuml;ssen akzeptiert werden.';
+              $notice = '<div class="videoframe_cookienotice dailymotioncookie" data-nosnippet><div class="videoframe_cookienotice_inner">'.$text.'</div></div>';
+          }
+          return $m[1] . $inner . $notice . $m[3];
+      },
+      $output
+    );
+
+    return $output;
+}

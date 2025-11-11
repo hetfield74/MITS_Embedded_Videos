@@ -12,9 +12,16 @@
  * --------------------------------------------------------------
  */
 
-if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true'
-  && basename($PHP_SELF) != FILENAME_ADVANCED_SEARCH_RESULT && isset($current_category_id) && $current_category_id != 0
+if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS')
+  && MODULE_MITS_EMBEDDED_VIDEOS_STATUS == 'true'
+  && basename($PHP_SELF) != FILENAME_ADVANCED_SEARCH_RESULT
+  && isset($current_category_id)
+  && $current_category_id != 0
+  && isset($category['categories_description'])
 ) {
+    if (function_exists('fix_embedded_videos')) {
+        $category['categories_description'] = fix_embedded_videos($category['categories_description']);
+    }
     $videos_query = "SELECT * FROM " . TABLE_MITS_EMBEDDED_VIDEOS . " WHERE categories_id = " . (int)$current_category_id . " AND languages_id = " . (int)$_SESSION['languages_id'] . " ORDER BY video_nr DESC";
     $category_videos_query = xtc_db_query($videos_query);
     if (xtc_db_num_rows($category_videos_query) > 0) {
@@ -45,6 +52,17 @@ if (defined('MODULE_MITS_EMBEDDED_VIDEOS_STATUS') && MODULE_MITS_EMBEDDED_VIDEOS
             }
         }
 
+        if (!function_exists('fix_embedded_videos')) {
+            if (isset($category['categories_description']) && ($add_before_description === true || $add_after_description === true)) {
+                $default_smarty->assign('CATEGORIES_DESCRIPTION', $category['categories_description']);
+            }
+            if (isset($category['categories_description_2']) && ($add_before_second_description === true || $add_after_second_description === true)) {
+                $default_smarty->assign('CATEGORIES_DESCRIPTION_2', $category['categories_description_2']);
+            }
+        }
+    }
+
+    if (function_exists('fix_embedded_videos')) {
         if (isset($category['categories_description']) && ($add_before_description === true || $add_after_description === true)) {
             $default_smarty->assign('CATEGORIES_DESCRIPTION', $category['categories_description']);
         }

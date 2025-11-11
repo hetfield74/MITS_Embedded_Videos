@@ -31,6 +31,15 @@ $lang_array = array(
   'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_TITLE' => 'Sort order',
   'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_SORT_ORDER_DESC'  => 'Order of processing. Smallest number is executed first.',
 
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_AVAILABLE_TITLE' => ' <span style="font-weight:bold;color:#900;background:#ff6;padding:2px;border:1px solid #900;">Please carry out module updates!</span>',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_AVAILABLE_DESC'  => '',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_FINISHED'        => 'The Modul MITS Embedded Videos module has been updated.',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_ERROR'           => 'Error',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_UPDATE_MODUL'           => 'Update module',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_DELETE_MODUL'           => 'The MITS Embedded Videos module has been deleted from the server.',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_CONFIRM_DELETE_MODUL'   => 'Are you sure you want to delete the MITS Embedded Videos module and all files from the server?',
+  'MODULE_CATEGORIES_CAT_MITS_EMBEDDED_VIDEOS_DELETE_FINISHED'        => 'The MITS Embedded Videos module has been deleted from the server.',
+
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT1' => 'Before the category description',
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT2' => 'After the category description',
   'MITS_EMBEDDED_VIDEOS_POSITION_CAT3' => 'Before the second category description',
