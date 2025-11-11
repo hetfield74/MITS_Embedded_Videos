@@ -20,6 +20,7 @@ Funktionsübersicht:
 - Für die Templates *tpl_modified* und *tpl_modified_responsive* sind keine Änderungen notwendig.
 - Videos sind sprachabhängig hinterlegbar
 - Titel als Videobeschreibung unterhalb des Videos hinzugefügt bei Videoposition vor oder nach der Beschreibung
+- Wenn bereits manuell hinzugefügte Videos in Artikel-, Kategorie- oder Content-Texten von YouTube, Vimeo oder Dailymotion über einen normalen iframe-Code eingebettet sind, kann das Modul diese automatisch erkennen und anpassen. Die Videos werden anschließend so ausgegeben, wie es das Modul bei integrierten Videos macht – inklusive Cookie-Consent-Einbindung und dem Fix für den YouTube-Fehler 153.
 
 Die Installation erfolgt ohne das Überschreiben von Dateien.
 
