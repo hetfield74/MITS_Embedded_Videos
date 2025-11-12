@@ -33,7 +33,7 @@ class mits_embedded_videos
     {
         $this->code = 'mits_embedded_videos';
         $this->name = 'MODULE_' . strtoupper($this->code);
-        $this->version = '1.5.5';
+        $this->version = '1.5.6';
 
         $this->sort_order = defined($this->name . '_SORT_ORDER') ? constant($this->name . '_SORT_ORDER') : 0;
         $this->enabled = defined($this->name . '_STATUS') && (constant($this->name . '_STATUS') == 'true');
@@ -177,7 +177,7 @@ class mits_embedded_videos
         global $messageStack;
 
         $cat_modul_code = 'cat_mits_embedded_videos';
-        $catname = 'MODULE_PRODUCT_' . strtoupper($cat_modul_code);
+        $catname = 'MODULE_CATEGORIES_' . strtoupper($cat_modul_code);
 
         xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $this->name . "_VERSION'");
         xtc_db_query("UPDATE " . TABLE_CONFIGURATION . " SET configuration_value = '" . $this->version . "' WHERE configuration_key = '" . $catname . "_VERSION'");
